@@ -1,10 +1,33 @@
+<?php 
+
+require_once "Datos/conexion.php";
+require_once "Datos/MetodoSql.php";
+
+
+if(isset($_POST['cedula'])){
+ 
+
+$me = new MetodoSql();
+
+$me->buscarCedula($_POST['cedula']);
+
+
+
+}
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    <link rel="stylesheet" href="assets/css/bulma.min.css"media="screen" type="text/css">
+    <link rel="stylesheet" href="vendor/css/bulma.min.css"media="screen" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css%22%3E">
      <link rel="stylesheet" href="assets/css/style.css" media="screen" type="text/css">
      <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -21,7 +44,7 @@
     <div class="container"> 
       <div class="columns is-centered">
         <div class="column is-5-tablet is-4-desktop is-4-widescreen" id="Form">
-          <form action="" class="box ">
+         <form action="index.php" method="POST">
             <p class="label has-text-centered is-size-5">
             Iniciar Sesion.
             </p>
@@ -33,18 +56,18 @@
             <div class="field">
               
               <div class="control has-icons-left">
-                <input type="text" placeholder="Ingresa tu cedula" class="input" required>
+                <input type="text" placeholder="Ingresa tu cedula" class="input" required name='cedula'>
                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
                 </span>
               </div>
             </div>
-            
+           
             <br/>          
             <div class="field">
-              <a class="button is-success is-fullwidth">
+              <button class="button is-success is-fullwidth" type="submit"> 
                 Iniciar
-              </a>
+              </button>
             </div>
                                            
             <p class="has-text-centered">
