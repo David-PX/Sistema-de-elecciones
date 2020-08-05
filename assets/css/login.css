@@ -1,29 +1,25 @@
 body{
-    background: linear-gradient(800deg,#29b342,#56d295);
+    
     height: 100vh;
     overflow: hidden;
 }
-section{
- 
-position: absolute;
-margin: auto;
-top: 28vh;
 
-
-}
-.center{
-  width: 60%;
+.container{
+  justify-content: center;
+  top: 30%;
 }
 .form-container{
     background: white;
-    padding: 40px;
-   
+    padding: 35px;
+    top: 40px;
     border-radius:25px ;
      box-shadow: 0 10px 10px rgba(0,0,0,0.16), 0 10px 10px rgba(0,0,0,0.23);
 }
 .form-container h3{
     padding: 0 0 14px 0;
     text-align: center;
+    margin-bottom: 10px;
+    
 }
 
 .fadeInDown {

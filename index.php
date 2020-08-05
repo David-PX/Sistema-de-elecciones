@@ -12,41 +12,42 @@
 <title>Inicio de sesion.</title>
 </head>
 <body>
-<a class="btn btn-success" href="admin/ingresarAdmin.php">Iniciar sesion como administrador</a>
-<section class="container-fluid fadeInDown center">
-      <div class="row justify-content-center">
-       <div class="col-12 col-sm-6 col-md-3 center">
+<a class="btn " href="admin/ingresarAdmin.php">Iniciar sesion como administrador</a>
 
 
+<div class="container  fadeInDown">
 
-      <form class="form-container" method="post" action="modelos/validarCiudadano.php ">
-          <h3 class="text-center">Inicio de sesión.</h3>
-  <div class="form-group inputWithIcon">
+<div class="row">
 
-    <input type="text" class="form-control txt" id="usuario"  name="cedula" required placeholder="Ingresa tu cedula...">
-    <i class="fas fa-user"></i>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+
+<form class="form-container border border-success border-2">
+  <h3 class=" border-bottom border-success">Iniciar sesion</h3>
+  <div class="form-group">
+    <label for="cedula">Cedula</label>
+    <input type="text" class="form-control" id="cedula" name="cedula">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
 
-
-  <button id="btnGreen" type="submit" class="btn btn-success btn-block"><i class="fas fa-sign-in-alt"></i> Iniciar sesion.</button>
-
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-success btn-block">Iniciar Sesion</button>
 </form>
+</div>
+<div class="col-md-3"></div>
 
 
-      </div>
-
-      </div>
-
-
-
-
-
-
-</section>
+</div>
 
 
 
 
+
+
+</div>
 
 
 
