@@ -1,0 +1,112 @@
+
+
+.header{
+    background: linear-gradient(400deg,#56d295,#29b342);
+}
+.nav{
+    border-bottom: 1px;
+
+
+}
+
+.card{
+    top: 50px;
+    margin: 10px;
+    padding: 10px;
+}
+
+
+
+
+
+
+.sidebar {
+  background: #56d295;
+ 
+  padding-top: 30px;
+  position: fixed;
+  margin-right: 40px;
+  width: 250px;
+  height: 100%;
+  
+}
+
+.sidebar .profile_image{
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.sidebar h4{
+  color: #ccc;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.sidebar a{
+  color: #fff;
+  display: block;
+  width: 100%;
+  line-height: 60px;
+  text-decoration: none;
+  padding-left: 40px;
+  box-sizing: border-box;
+  transition: 0.5s;
+  transition-property: background;
+}
+
+.sidebar a:hover{
+  background: #19B3D3;
+}
+
+.sidebar i{
+  padding-right: 10px;
+}
+
+label #sidebar_btn{
+  z-index: 1;
+  color: #fff;
+  position: fixed;
+  cursor: pointer;
+  left: 300px;
+  font-size: 20px;
+  margin: 5px 0;
+  transition: 0.5s;
+  transition-property: color;
+}
+
+label #sidebar_btn:hover{
+  color: #19B3D3;
+}
+
+#check:checked ~ .sidebar{
+  left: -190px;
+}
+
+#check:checked ~ .sidebar a span{
+  display: none;
+}
+
+#check:checked ~ .sidebar a{
+  font-size: 20px;
+  margin-left: 170px;
+  width: 80px;
+}
+
+.content{
+  margin-left: 250px;
+  background: url(background.png) no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  transition: 0.5s;
+}
+
+#check:checked ~ .content{
+  margin-left: 60px;
+}
+
+#check{
+  display: none;
+}

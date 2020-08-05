@@ -1,30 +1,50 @@
 
+<?php
+require_once "../Datos/conexion.php";
+require_once "AdminService.php";
+if (isset($_POST['usuario']) && isset($_POST['contraseña'])) {
 
+    $service = new AdminService();
+    if ($service->Login($_POST['usuario'], $_POST['contraseña'])) {
+        header('Location: menuAdmin.php');
+    } else {
+        echo "<div class='alert alert-danger'> Usuario o contraseña incorrecto </div>";
+    }
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="assets/css/login.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/login.css" type="text/css">
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<title>Inicio de sesion.</title>
+<title>Iniciando sesion como administrador.</title>
 </head>
 <body>
-<a class="btn btn-success" href="admin/ingresarAdmin.php">Iniciar sesion como administrador</a>
+
 <section class="container-fluid fadeInDown center">
       <div class="row justify-content-center">
        <div class="col-12 col-sm-6 col-md-3 center">
 
 
 
-      <form class="form-container" method="post" action="modelos/validarCiudadano.php ">
-          <h3 class="text-center">Inicio de sesión.</h3>
+      <form class="form-container" method="post" action="ingresarAdmin.php ">
+          <h3 class="text-center">Administradores.</h3>
   <div class="form-group inputWithIcon">
 
-    <input type="text" class="form-control txt" id="usuario"  name="cedula" required placeholder="Ingresa tu cedula...">
+    <input type="text" class="form-control txt" id="usuario"  name="usuario" required placeholder="Ingresa tu usuario">
     <i class="fas fa-user"></i>
+  </div>
+  <div class="form-group inputWithIcon">
+
+    <input type="password" class="form-control txt" id="contraseña"  name="contraseña" required placeholder="Ingresa tu contraseña">
+
+  <i class="fas fa-lock"></i>
   </div>
 
 
