@@ -3,26 +3,24 @@
 class Conexion
 {
 
-    public  $con = null;
+    public $con = null;
+    private $server = 'localhost';
+    private $user = 'root';
+    private $password = "";
+    private $nombreBD = "elecciones";
 
-    public  function conectar()
+    public function conectar()
     {
 
-        $this->con = new mysqli('localhost', 'root', '', 'elecciones');
+        $this->con = new mysqli($this->server, $this->user, $this->password, $this->nombreBD);
 
         if (mysqli_connect_errno()) {
             printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-        }else{
 
-            printf("Conexion establecida");
+        } else {
+            return $this->con;
         }
 
-    }
-
-    public function getConection()
-    {
-        return $this->con;
     }
 
     public function cerrarConexion()
@@ -35,5 +33,3 @@ class Conexion
     }
 
 }
-
-
