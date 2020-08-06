@@ -3,10 +3,10 @@
 class Eleccion
 {
 
-    private $id;
-    private $nombre;
-    private $fechaRealizacion;
-    private $estado;
+    public $id;
+    public $nombre;
+    public $fechaRealizacion;
+    public $estado;
 
     public function InicializarDatos($id, $nombre, $fechaRealizacion, $estado)
     {

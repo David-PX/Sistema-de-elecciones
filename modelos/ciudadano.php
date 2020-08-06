@@ -3,11 +3,11 @@
 class Ciudadanos
 {
 
-    private $cedula;
-    private $nombre;
-    private $apellido;
-    private $email;
-    private $estado;
+    public $cedula;
+    public $nombre;
+    public $apellido;
+    public $email;
+    public $estado;
 
     public function InicializarDatos($cedula, $nombre, $apellido, $email, $estado)
     {
