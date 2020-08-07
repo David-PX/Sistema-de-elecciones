@@ -1,6 +1,16 @@
+<?php
+require_once 'CandidatoServiceDatabase.php';
+require_once 'candidato.php';
+if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
 
+    $service = new CandidatoServiceDatabase();
+    $candidato = new Candidato();
 
+    $candidato->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], null, $_POST['activo']);
+    $service->Add($candidato);
+}
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +38,8 @@
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="../candidatos/addCandidato.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos</a>
+        <a href="../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
@@ -72,110 +82,91 @@
           </div>
         </div>
       </nav>
-                  <!---->
-                  <div class="container-fluid p-3">
+
+       <!---->
+      <div class="container-fluid pl-5 pt-4 pr-5">
                     <div class="">
                     <div class="card card-elec">
 
   <div class="card-body">
-    <h5 class="card-title text-success">Elecciones activas:</h5>
-    <p class="card-text">Elecciones 2020</p>
-    <p>Fecha de inicio: <?php echo date('d-m-Y'); ?> </p>
-    <a href="#" class="btn btn-success">Terminar Elecciones</a>
+<form method="POST" action="addCandidato.php" enctype="multipart/form-data">
+  <div class="form-row">
+      <div class="form-group col-md-2 ">
+        <div id="preview" class="img-thumbnail border border-success rounded float-left fotoFixed" >
+            <img src="../assets/img/chico.png" alt="" srcset="" width="100px" class="">
+        </div>
+
+      </div>
+
+       <div class="form-group col-md-2 mt-4 mr-4">
+
+
+    <input type="file" class="form-control custom-file-input" id="file" name="foto">
+    <label for="file" class="custom-file-label">foto</label>
+  </div>
+
+    <div class="form-group col-md-3">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" id="apellido" name="apellido">
+    </div>
+
+  </div>
+
+  <div class="form-row">
+      <div class="form-group col-md-6">
+    <label for="inputAddress1">Partido</label>
+    <input type="text" class="form-control" id="inputAddress1" placeholder="Partido al que pertenece" name="partido">
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress2">Puesto</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto">
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck" checked name="activo">
+      <label class="form-check-label" for="gridCheck" >
+        Activo
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Guardar</button>
+</form>
   </div>
 </div>
                   </div>
 </div>
-    <!---->
-
-      <div id="content" class="container-fluid p-2">
-        <section class="py-3">
-
-          <!-- Highlights -->
-          <div class="row">
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
-
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Presidente Ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
-
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Alcalde ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
-
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Senador ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
-
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Diputado ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Fin highlights -->
-
-          <div class="row mb-3">
-            <!-- Tabla usuarios -->
-            <div class="col-xl-9 col-lg-12">
+<!---->
+<!-- Tabla usuarios -->
+            <div class="col-xl-9 col-lg-12 ml-5 mt-3">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="2"><small class="font-weight-bold">Administradores<small></th>
-                      <th scope="col"><small class="font-weight-bold">Estatus<small></th>
-                      <th scope="col"><small class="font-weight-bold">Configuración<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Candidatos<small></th>
+                      <th scope="col"><small class="font-weight-bold">Nombre<small></th>
+                      <th scope="col"><small class="font-weight-bold">Apellido<small></th>
+                       <th scope="col"><small class="font-weight-bold">Partido<small></th>
+                        <th scope="col"><small class="font-weight-bold">Puesto<small></th>
+                         <th scope="col"><small class="font-weight-bold">Estado<small></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="shadow-sm border border-success rounded">
                       <td><img src="../assets/img/chico.png" class="img-fluid rounded-circle avatar" /></td>
-                      <td><span class="d-block">Admin</span><small class="text-muted">Admin</small>
-                      </td>
+                      <td class="align-middle"><span class="d-block">Leonel</span></td>
+                      <td class="align-middle"><span class="d-block">Fernandez</span></td>
+                        <td class="align-middle"><span class="d-block">Fuerza del pueblo</span></td>
+                       <td class="align-middle"><span class="d-block">Presidentes</span></td>
                       <td class="align-middle"><span class="badge badge-primary text-success">Activo</span></td>
-                      <td class="align-middle"><span class="badge badge-secondary">Editar <i
-                            class="icon ion-md-settings ml-2"></i></span></td>
+                      <td class="align-middle"><span class="badge badge-secondary">Editar <i class="icon ion-md-settings ml-2"></i></span></td>
+
                     </tr>
 
                   </tbody>
@@ -184,29 +175,12 @@
             </div>
             <!-- Fin tabla usarios -->
 
-            <!-- Mensajes -->
-
-            <!-- Fin mensajes -->
-          </div>
-
-          <!-- Eventos -->
-
-          <!-- Fin Eventos -->
-
-        </section>
-      </div>
-    </div>
-    <!-- Fin Page Content -->
-  </div>
-  <!-- Fin wrapper -->
-
-
-
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

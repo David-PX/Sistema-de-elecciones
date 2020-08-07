@@ -22,19 +22,20 @@
 <div class="col-md-3"></div>
 <div class="col-md-6">
 
-<form class="form-container border border-success border-2">
+<form class="form-container border border-success border-2" method="post" action="">
   <h3 class=" border-bottom border-success">Iniciar sesion</h3>
-  <div class="form-group">
+  <div class="form-group inputWithIcon">
     <label for="cedula">Cedula</label>
-    <input type="text" class="form-control" id="cedula" name="cedula">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <input type="text" class="form-control " id="cedula" name="cedula" placeholder="Ingresa tu cedula...">
+    <i class="fas fa-user"></i>
+
   </div>
 
-  <div class="form-group form-check">
+  <div class="form-group form-check mt-5">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <label class="form-check-label" for="exampleCheck1">Recuerdame</label>
   </div>
-  <button type="submit" class="btn btn-success btn-block">Iniciar Sesion</button>
+  <button type="submit" class="btn btn-success btn-block"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</button>
 </form>
 </div>
 <div class="col-md-3"></div>

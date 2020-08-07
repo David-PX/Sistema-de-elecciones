@@ -1,30 +1,24 @@
 
 :root {
-  --primary: #29b342;
-  --light: #56d295;
+  
   --light-blue: #F5F6FA;
-  --grey: #29b342;
+  
 }
 
 body {
   overflow: hidden;
   font-family: 'Muli', sans-serif;
-  background: linear-gradient(800deg,#29b342,#56d295) !important;
+
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: var(--primary);
-  font-weight: 700;
-}
+
 
 .text-muted {
-  color: var(--primary) !important;
+  
   opacity: .7;
 }
 
-.bg-light {
-  background-color: var(--primary) !important;
-}
+
 
 .bg-light-blue {
   background-color: var(--light-blue) !important;
@@ -92,14 +86,12 @@ h1, h2, h3, h4, h5, h6 {
   border: 0;
 }
 
-.btn-primary:hover {
-  background-color: rgba(0, 123, 255, .2) !important;
+.btn-success:hover {
+  color: white;
+  background-color: rgba(0, 255, 98, 0.2) !important;
 }
 
-.badge-secondary {
-  background-color: var(--grey);
-  color: var(--primary);
-}
+
 
 #content {
   overflow-y: auto;
@@ -131,4 +123,7 @@ table tbody td {
   #content-wrapper.toggled #sidebar-container {
     margin-left: -18rem;
   }
+}
+.fotoFixed{
+  object-fit: cover;
 }

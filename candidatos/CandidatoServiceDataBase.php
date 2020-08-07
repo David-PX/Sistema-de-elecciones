@@ -1,5 +1,6 @@
 <?php
-
+require_once "../Datos/conexion.php";
+require_once "candidato.php";
 class CandidatoServiceDatabase
 {
 
@@ -10,7 +11,7 @@ class CandidatoServiceDatabase
     //Constructores
     public function __construct()
     {
-        $this->utilities = new Utilities();
+
         $this->context = new Conexion();
     }
 
@@ -24,7 +25,7 @@ class CandidatoServiceDatabase
         $db = $this->context->conectar();
 
         $stmt = $db->prepare('SELECT * FROM candidatos');
-        $stmt->bind_param('i', $user->id);
+
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -35,7 +36,7 @@ class CandidatoServiceDatabase
 
                 $candidato = new Candidato();
 
-                $candidato->InicializarDatos($row->id, $row->nombre, $row->apellido, $row->partidoPerteneciente, $row->puesto, $row->foto, $row->estado);
+                $candidato->InicializarDatos($row->idCandidatos, $row->Nombre, $row->Apellido, $row->Partido, $row->Puesto, $row->Foto, $row->Estado);
 
                 array_push($candidatos, $candidato);
 
@@ -67,7 +68,7 @@ class CandidatoServiceDatabase
 
             while ($row = $result->fetch_object()) {
 
-                $candidato->InitializeData($row->id, $row->nombre, $row->apellido, $row->partidoPerteneciente, $row->puesto, $row->foto, $row->estado);
+                $candidato->InicializarDatos($row->idCandidatos, $row->Nombre, $row->Apellido, $row->Partido, $row->Puesto, $row->Foto, $row->Estado);
 
             }
 
@@ -85,9 +86,9 @@ class CandidatoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('INSERT INTO candidatos (nombre, apellido, partidoPerteneciente, puesto, foto, estado) VALUES (?,?,?,?,?,?)');
+        $stmt = $db->prepare('INSERT INTO candidatos (Nombre, Apellido, Partido, Puesto, Foto, Estado) VALUES (?,?,?,?,?,?)');
 
-        $stmt->bind_param('ssisbs', $candidato->nombre, $candidato->apellido, $candidato->partidoPerteneciente, $candidato->puesto, $candidato->foto, $candidato->estado);
+        $stmt->bind_param('ssisbs', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado);
 
         //Insertar imagen
 
@@ -133,6 +134,25 @@ class CandidatoServiceDatabase
         $stmt = $db->prepare('UPDATE candidatos SET nombre = ?, apellido = ?, partidoPerteneciente = ?, puesto = ?, foto = ?, estado = ? WHERE id = ?');
 
         $stmt->bind_param('ssisbsi', $candidato->nombre, $candidato->apellido, $candidato->partidoPerteneciente, $candidato->puesto, $candidato->foto, $candidato->estado, $id);
+
+        //Insertar imagen
+
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+
+            $tmpName = $_FILES['foto']['tmp_name'];
+
+            $photo = fopen($tmpName, 'rb');
+
+            $contents = fread($photo, filesize($tmpName));
+
+            $user->profilePhoto = $contents;
+
+            fclose($photo);
+
+            //Enviar imagen
+            $stmt->send_long_data(4, $user->profilePhoto);
+
+        }
 
         $stmt->execute();
         $stmt->close();
