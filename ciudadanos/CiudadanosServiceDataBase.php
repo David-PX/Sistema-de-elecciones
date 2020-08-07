@@ -24,7 +24,6 @@ class CandidatoServiceDatabase
         $db = $this->context->conectar();
 
         $stmt = $db->prepare('SELECT * FROM candidatos');
-        $stmt->bind_param('i', $user->id);
         $stmt->execute();
 
         $result = $stmt->get_result();

@@ -1,22 +1,23 @@
 body{
-    
+    background-color: #F5F6FA !important;
     height: 100vh;
     overflow: hidden;
 }
 
-.container{
-  justify-content: center;
-  top: 30%;
+.col-md-6{
+  
+  
+  top: 8em ;
 }
 .form-container{
     background: white;
     padding: 35px;
-    top: 40px;
+    
     border-radius:25px ;
      box-shadow: 0 10px 10px rgba(0,0,0,0.16), 0 10px 10px rgba(0,0,0,0.23);
 }
 .form-container h3{
-    padding: 0 0 14px 0;
+    padding: 0 0 18px 0;
     text-align: center;
     margin-bottom: 10px;
     
@@ -72,7 +73,7 @@ padding-left: 30px;
 .inputWithIcon i {
   position: absolute;
   left: 0;
-  top: 6px;
+  top: 35px;
   padding: 9px 8px;
 
 }
