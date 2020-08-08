@@ -117,7 +117,7 @@ class CandidatoServiceDatabase
     {
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('DELETE FROM candidatos WHERE id=?');
+        $stmt = $db->prepare("UPDATE candidatos SET Estado = 'Inactivo' WHERE idCandidatos=?");
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $stmt->close();

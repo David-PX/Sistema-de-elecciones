@@ -8,7 +8,14 @@
 body {
   overflow: hidden;
   font-family: 'Muli', sans-serif;
-
+  width: 100%;
+overflow-y: scroll;
+}
+body::-webkit-scrollbar{
+    width: 5px;
+}
+body::-webkit-scrollbar-thumb{
+    background:#ff9100;
 }
 
 
@@ -94,7 +101,7 @@ body {
 
 
 #content {
-  overflow-y: auto;
+  
   height: 100vh;
 }
 table {

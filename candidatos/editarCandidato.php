@@ -5,16 +5,9 @@ require_once '../helpers/Utilities.php';
 
 $candidatos = new CandidatoServiceDatabase();
 $lista = $candidatos->GetList();
-if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
-    $utilities = new Utilities();
-    $service = new CandidatoServiceDatabase();
-    $candidato = new Candidato();
-    $activo = $utilities->getActive();
-    $candidato->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], null, $activo);
-
-    $service->Add($candidato);
-}
-
+$id = $_GET['id'];
+$candidato = $candidatos->GetById($id);
+var_dump($candidato);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +105,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
 
     <div class="form-group col-md-3">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required>
+      <input type="text" class="form-control" id="nombre" name="nombre" required value="">
     </div>
     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
@@ -149,7 +142,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
 </div>
 <!---->
 <!-- Tabla usuarios -->
-            <div class="col-xl-9 col-lg-12 ml-5 mt-3">
+            <div class="col-xl-9 col-lg-12 ml-5 mt-3 " id="disable" onload="Habilitar();">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -174,7 +167,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
                       <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
                           <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editarCandidato.php?id=<?php echo $list->idCandidatos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                         <a href="#">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
                     <?php endforeach;?>
