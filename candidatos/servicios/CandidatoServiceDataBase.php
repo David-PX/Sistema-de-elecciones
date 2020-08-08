@@ -1,12 +1,11 @@
 <?php
-require_once "../Datos/conexion.php";
+require_once "../../Datos/conexion.php";
 require_once "candidato.php";
 class CandidatoServiceDatabase
 {
 
     //Atributos
     private $context;
-    private $utilities;
 
     //Constructores
     public function __construct()
@@ -88,7 +87,7 @@ class CandidatoServiceDatabase
 
         $stmt = $db->prepare('INSERT INTO candidatos (Nombre, Apellido, Partido, Puesto, Foto, Estado) VALUES (?,?,?,?,?,?)');
 
-        $stmt->bind_param('ssssbs', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado);
+        $stmt->bind_param('ssiibs', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado);
 
         //Insertar imagen
 
@@ -129,9 +128,9 @@ class CandidatoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('UPDATE candidatos SET nombre = ?, apellido = ?, partidoPerteneciente = ?, puesto = ?, foto = ?, estado = ? WHERE id = ?');
+        $stmt = $db->prepare('UPDATE candidatos SET Nombre = ?, Apellido = ?, Partido = ?, Puesto = ?, Foto = ?, Estado = ? WHERE idCandidatos = ?');
 
-        $stmt->bind_param('ssisbsi', $candidato->nombre, $candidato->apellido, $candidato->partidoPerteneciente, $candidato->puesto, $candidato->foto, $candidato->estado, $id);
+        $stmt->bind_param('ssiibsi', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado, $id);
 
         //Insertar imagen
 
@@ -148,6 +147,9 @@ class CandidatoServiceDatabase
             fclose($photo);
 
             //Enviar imagen
+            $stmt->send_long_data(4, $candidato->Foto);
+
+        } else {
             $stmt->send_long_data(4, $candidato->Foto);
 
         }

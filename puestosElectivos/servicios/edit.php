@@ -1,0 +1,27 @@
+<?php
+require_once '../servicios/PuestoServiceDatabase.php';
+require_once 'puestoElectivo.php';
+require_once '../../helpers/Utilities.php';
+
+$Puesto = new PuestoServiceDatabase();
+$utilities = new Utilities();
+$lista = $Puesto->GetList();
+$entidad = new puestoElectivo();
+
+if (isset($_GET['id'])) {
+
+    $id = $_GET['id'];
+
+    $Puestos = $Puesto->GetById($id);
+
+    if (isset($_POST['nombre']) && isset($_POST['descripcion'])) {
+        $activo = $utilities->getActive();
+
+        $entidad->InicializarDatos(0, $_POST['nombre'], $_POST['descripcion'], $activo);
+
+        $Puesto->Update($id, $entidad);
+
+        header('Location: ../vistas/addPuestoElectivo.php');
+
+    }
+}
