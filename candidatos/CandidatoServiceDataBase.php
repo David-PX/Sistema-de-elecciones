@@ -24,7 +24,7 @@ class CandidatoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('SELECT * FROM candidatos');
+        $stmt = $db->prepare("SELECT * FROM candidatos WHERE Estado<>'Inactivo'");
 
         $stmt->execute();
 
@@ -56,7 +56,7 @@ class CandidatoServiceDatabase
 
         $candidato = new Candidato();
 
-        $stmt = $db->prepare('SELECT * FROM candidatos WHERE id = ?');
+        $stmt = $db->prepare('SELECT * FROM candidatos WHERE idCandidatos = ?');
         $stmt->bind_param('i', $id);
         $stmt->execute();
 
@@ -88,7 +88,7 @@ class CandidatoServiceDatabase
 
         $stmt = $db->prepare('INSERT INTO candidatos (Nombre, Apellido, Partido, Puesto, Foto, Estado) VALUES (?,?,?,?,?,?)');
 
-        $stmt->bind_param('ssisbs', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado);
+        $stmt->bind_param('ssssbs', $candidato->Nombre, $candidato->Apellido, $candidato->Partido, $candidato->Puesto, $candidato->Foto, $candidato->Estado);
 
         //Insertar imagen
 
@@ -100,12 +100,12 @@ class CandidatoServiceDatabase
 
             $contents = fread($photo, filesize($tmpName));
 
-            $user->profilePhoto = $contents;
+            $candidato->Foto = $contents;
 
             fclose($photo);
 
             //Enviar imagen
-            $stmt->send_long_data(4, $user->profilePhoto);
+            $stmt->send_long_data(4, $candidato->Foto);
 
         }
 
@@ -118,11 +118,9 @@ class CandidatoServiceDatabase
     public function Delete($id)
     {
         $db = $this->context->conectar();
+        $sql = "UPDATE candidatos SET Estado = 'Inactivo' WHERE idCandidatos =$id";
+        return $result = mysqli_query($db, $sql);
 
-        $stmt = $db->prepare('DELETE FROM candidatos WHERE id=?');
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-        $stmt->close();
     }
 
     //Actualizar candidato
@@ -145,12 +143,12 @@ class CandidatoServiceDatabase
 
             $contents = fread($photo, filesize($tmpName));
 
-            $user->profilePhoto = $contents;
+            $candidato->Foto = $contents;
 
             fclose($photo);
 
             //Enviar imagen
-            $stmt->send_long_data(4, $user->profilePhoto);
+            $stmt->send_long_data(4, $candidato->Foto);
 
         }
 

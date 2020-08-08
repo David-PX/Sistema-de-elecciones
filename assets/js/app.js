@@ -15,13 +15,20 @@ $(document).ready(function () {
   reader.onload = function(){
     let preview = document.getElementById('preview'),
             image = document.createElement('img');
-            document.getElementsByTagName('img').classList.add("fotoFixed");
+          
              
     image.src = reader.result;
     
     preview.innerHTML = '';
     preview.append(image);
   };
+
+
+
+   $("table").attr('disabled','disabled');
+   
+
+  
 }
 
 

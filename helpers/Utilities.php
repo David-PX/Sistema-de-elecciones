@@ -24,4 +24,15 @@ class Utilities
         return $currentDateTime->format($format);
 
     }
+
+    public function getActive()
+    {
+
+        if (isset($_POST["activo"])) {
+            return "Activo";
+        } else {
+            return "Inactivo";
+        }
+
+    }
 }
