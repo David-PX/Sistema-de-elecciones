@@ -4,11 +4,11 @@ class Utilities
 {
 
     //Obtiene base 64 de una imagen, para mostrar en pantalla
-    public function getImage64($photo)
+    public function getSrcImage64($photo)
     {
         if (!empty($photo)) {
 
-            return base64_encode($photo);
+            return 'data:image/jpeg;base64,' . base64_encode($photo);
 
         }
 

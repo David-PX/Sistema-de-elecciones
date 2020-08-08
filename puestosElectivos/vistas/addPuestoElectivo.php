@@ -1,13 +1,12 @@
 <?php
-require_once 'CandidatoServiceDatabase.php';
-require_once 'candidato.php';
-require_once '../helpers/Utilities.php';
 
-$candidatos = new CandidatoServiceDatabase();
-$lista = $candidatos->GetList();
-$id = $_GET['id'];
-$candidato = $candidatos->GetById($id);
-var_dump($candidato);
+require_once '../servicios/puestoElectivo.php';
+require_once '../../helpers/Utilities.php';
+require_once '../servicios/PuestoServiceDataBase.php';
+
+$service = new PuestoServiceDatabase();
+$lista = $service->GetList();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +14,7 @@ var_dump($candidato);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../assets/css/admin.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/admin.css" type="text/css">
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -36,9 +35,9 @@ var_dump($candidato);
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
+        <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-chair"></i> Puestos electivos</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos </a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
@@ -87,44 +86,22 @@ var_dump($candidato);
                     <div class="card card-elec">
 
   <div class="card-body">
-<form method="POST" action="addCandidato.php" enctype="multipart/form-data">
+<form method="POST" action="../servicios/add.php" >
   <div class="form-row">
-      <div class="form-group col-md-2 ">
-        <div id="preview" class="img-thumbnail border border-success rounded float-left fotoFixed" >
-            <img src="../assets/img/chico.png" alt="" srcset="" width="100px" >
-        </div>
-
-      </div>
-
-       <div class="form-group col-md-2 mt-4 mr-4">
 
 
-    <input type="file" class="form-control custom-file-input" id="file" name="foto">
-    <label for="file" class="custom-file-label">foto</label>
-  </div>
-
-    <div class="form-group col-md-3">
-      <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required value="">
-    </div>
     <div class="form-group col-md-4">
-      <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" id="apellido" name="apellido" required>
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="form-group col-md-8">
+      <label for="exampleFormControlTextarea1">Descripcion</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion"rows="3"></textarea>
     </div>
 
   </div>
 
-  <div class="form-row">
-      <div class="form-group col-md-6">
-    <label for="inputAddress1">Partido</label>
-    <input type="text" class="form-control" id="inputAddress1" placeholder="Partido al que pertenece" name="partido" required>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="inputAddress2">Puesto</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto" required>
-    </div>
 
-  </div>
 
   <div class="form-group">
     <div class="form-check">
@@ -138,39 +115,40 @@ var_dump($candidato);
 </form>
   </div>
 </div>
-                  </div>
+ </div>
 </div>
 <!---->
 <!-- Tabla usuarios -->
-            <div class="col-xl-9 col-lg-12 ml-5 mt-3 " id="disable" onload="Habilitar();">
+            <div class="col-xl-9 col-lg-12 ml-5 mt-3">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="col"><small class="font-weight-bold">Candidatos<small></th>
-                      <th scope="col"><small class="font-weight-bold">Nombre<small></th>
-                      <th scope="col"><small class="font-weight-bold">Apellido<small></th>
-                       <th scope="col"><small class="font-weight-bold">Partido<small></th>
-                        <th scope="col"><small class="font-weight-bold">Puesto<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Puestos Electivos<small></th>
+
+
+                       <th scope="col"><small class="font-weight-bold">Descripcion<small></th>
+
                          <th scope="col"><small class="font-weight-bold">Estado<small></th>
                     </tr>
                   </thead>
                   <tbody>
-                      <?php foreach ($lista as $list): ?>
+ <?php foreach ($lista as $list): ?>
 
                     <tr class="shadow-sm border border-success rounded">
-                      <td><img src="../assets/img/chico.png" class="img-fluid rounded-circle avatar" /></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
-                        <td class="align-middle"><span class="d-block"> <?php echo $list->Partido ?> </span></td>
-                       <td class="align-middle"><span class="d-block"> <?php echo $list->Puesto ?> </span></td>
-                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
+
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Descripcion; ?> </span></td>
+
+
+                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado; ?> </span></td>
                       <td class="align-middle">
-                          <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="#">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrarPuesto.php?id=<?php echo $list->idPuesto_Electivo; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editPuestoElectivo.php?id=<?php echo $list->idPuesto_Electivo; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+
 
                     </tr>
-                    <?php endforeach;?>
+ <?php endforeach;?>
 
                   </tbody>
                 </table>

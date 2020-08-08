@@ -1,18 +1,31 @@
 <?php
-require_once 'CandidatoServiceDatabase.php';
+require_once '../servicios/CandidatoServiceDatabase.php';
 require_once 'candidato.php';
-require_once '../helpers/Utilities.php';
+require_once '../../helpers/Utilities.php';
 
 $candidatos = new CandidatoServiceDatabase();
+$utilities = new Utilities();
 $lista = $candidatos->GetList();
-if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
-    $utilities = new Utilities();
-    $service = new CandidatoServiceDatabase();
-    $candidato = new Candidato();
-    $activo = $utilities->getActive();
-    $candidato->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], null, $activo);
+$entidad = new Candidato();
 
-    $service->Add($candidato);
+if (isset($_GET['id'])) {
+
+    $id = $_GET['id'];
+
+    $candidato = $candidatos->GetById($id);
+
+    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
+        $activo = $utilities->getActive();
+
+        $image = (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) ? null : $candidato->Foto;
+
+        $entidad->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], $image, $activo);
+
+        $candidatos->Update($id, $entidad);
+
+        header('Location: addCandidato.php');
+
+    }
 }
 
 ?>
@@ -22,7 +35,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../assets/css/admin.css" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/admin.css" type="text/css">
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -94,11 +107,12 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
                     <div class="card card-elec">
 
   <div class="card-body">
-<form method="POST" action="addCandidato.php" enctype="multipart/form-data">
+<form method="POST" action="editarCandidato.php?id=<?=$candidato->idCandidatos;?>" enctype="multipart/form-data">
+<input type="text" hidden="" value="<?php echo $id ?>" name="id">
   <div class="form-row">
       <div class="form-group col-md-2 ">
         <div id="preview" class="img-thumbnail border border-success rounded float-left fotoFixed" >
-            <img src="../assets/img/chico.png" alt="" srcset="" width="100px" >
+            <img src=" <?=$utilities->getSrcImage64($candidato->Foto);?>" alt="" srcset="" width="100px" >
         </div>
 
       </div>
@@ -106,17 +120,18 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
        <div class="form-group col-md-2 mt-4 mr-4">
 
 
-    <input type="file" class="form-control custom-file-input" id="file" name="foto">
+    <input type="file" class="form-control custom-file-input" id="file" name="foto" value="<?php $candidato->Foto;?>">
+
     <label for="file" class="custom-file-label">foto</label>
   </div>
 
     <div class="form-group col-md-3">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required>
+      <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $candidato->Nombre; ?> ">
     </div>
     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" id="apellido" name="apellido" required>
+      <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php echo $candidato->Apellido; ?>">
     </div>
 
   </div>
@@ -124,11 +139,11 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
   <div class="form-row">
       <div class="form-group col-md-6">
     <label for="inputAddress1">Partido</label>
-    <input type="text" class="form-control" id="inputAddress1" placeholder="Partido al que pertenece" name="partido" required>
+    <input type="text" class="form-control" id="inputAddress1" placeholder="Partido al que pertenece" name="partido" required value="<?php echo $candidato->Partido; ?>">
     </div>
     <div class="form-group col-md-6">
     <label for="inputAddress2">Puesto</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto" required>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto" required value="<?php echo $candidato->Puesto; ?>">
     </div>
 
   </div>
@@ -148,42 +163,7 @@ if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partid
                   </div>
 </div>
 <!---->
-<!-- Tabla usuarios -->
-            <div class="col-xl-9 col-lg-12 ml-5 mt-3">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th colspan="col"><small class="font-weight-bold">Candidatos<small></th>
-                      <th scope="col"><small class="font-weight-bold">Nombre<small></th>
-                      <th scope="col"><small class="font-weight-bold">Apellido<small></th>
-                       <th scope="col"><small class="font-weight-bold">Partido<small></th>
-                        <th scope="col"><small class="font-weight-bold">Puesto<small></th>
-                         <th scope="col"><small class="font-weight-bold">Estado<small></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <?php foreach ($lista as $list): ?>
 
-                    <tr class="shadow-sm border border-success rounded">
-                      <td><img src="../assets/img/chico.png" class="img-fluid rounded-circle avatar" /></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
-                        <td class="align-middle"><span class="d-block"> <?php echo $list->Partido ?> </span></td>
-                       <td class="align-middle"><span class="d-block"> <?php echo $list->Puesto ?> </span></td>
-                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
-                      <td class="align-middle">
-                          <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editarCandidato.php?id=<?php echo $list->idCandidatos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
-
-                    </tr>
-                    <?php endforeach;?>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- Fin tabla usarios -->
 
 
 
