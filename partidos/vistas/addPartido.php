@@ -1,19 +1,13 @@
 <?php
-require_once '../servicios/CandidatoServiceDatabase.php';
-require_once '../servicios/candidato.php';
-require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
-require_once '../../partidos/servicios/PartidoServiceDataBase.php';
+require_once '../servicios/PartidoServiceDatabase.php';
+require_once '../servicios/partido.php';
+
 require_once '../../helpers/Utilities.php';
 
-$candidatos = new CandidatoServiceDatabase();
-$partido = new PartidoServiceDataBase();
-$puesto = new PuestoServiceDataBase();
-$lista = $candidatos->GetList();
-$lista1 = $partido->GetList();
-$lista2 = $puesto->GetList();
+$partido = new PartidoServiceDatabase();
+$lista = $partido->GetList();
 
 $utilities = new Utilities();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,10 +37,11 @@ $utilities = new Utilities();
       </div>
       <div class="menu list-group-flush">
         <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>
@@ -95,7 +90,17 @@ $utilities = new Utilities();
   <div class="card-body">
 <form method="POST" action="../servicios/add.php" enctype="multipart/form-data">
   <div class="form-row">
-      <div class="form-group col-md-2 ">
+
+    <div class="form-group col-md-3">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="apellido">Descripcion</label>
+      <input type="text" class="form-control" id="apellido" name="descripcion" required>
+    </div>
+
+    <div class="form-group col-md-2 ">
         <div id="preview" class="img-thumbnail border border-success rounded float-left " >
             <img src="../../assets/img/chico.png" alt="" srcset="" width="100px" >
         </div>
@@ -109,49 +114,11 @@ $utilities = new Utilities();
     <label for="file" class="custom-file-label">foto</label>
   </div>
 
-    <div class="form-group col-md-3">
-      <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" id="apellido" name="apellido" required>
-    </div>
-
   </div>
 
-  <div class="form-row">
-      <div class="form-group col-md-6">
-    <label for="exampleFormControlSelect1">Seleccione su partido</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="partido">
-
-      <?php foreach ($lista1 as $lt1): ?>
 
 
 
-        <option value="<?php echo $lt1->idPartidos; ?>"> <?php echo $lt1->Nombre; ?> </option>
-
-
-
-
-        <?php endforeach;?>
-
-    </select>
-  </div>
-    <div class="form-group col-md-6">
-    <label for="puesto">Seleccione su Puesto electivo</label>
-    <select class="form-control" id="puesto" name="puesto">
-
-      <?php foreach ($lista2 as $lt2): ?>
-
-        <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
-
-
- <?php endforeach;?>
-</select>
-    </div>
-
-  </div>
 
   <div class="form-group">
     <div class="form-check">
@@ -174,33 +141,28 @@ $utilities = new Utilities();
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="col"><small class="font-weight-bold">Candidatos<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Partidos<small></th>
                       <th scope="col"><small class="font-weight-bold">Nombre<small></th>
-                      <th scope="col"><small class="font-weight-bold">Apellido<small></th>
-                       <th scope="col"><small class="font-weight-bold">Partido<small></th>
-                        <th scope="col"><small class="font-weight-bold">Puesto<small></th>
+                      <th scope="col"><small class="font-weight-bold">Descripcion<small></th>
+
                          <th scope="col"><small class="font-weight-bold">Estado<small></th>
                     </tr>
                   </thead>
                   <tbody>
-                      <?php foreach ($lista as $list): ?>
 
-                      <?php $puestoPerteneciente = $puesto->GetById($list->Puesto);?>
-                      <?php $partidoPerteneciente = $partido->GetById($list->Partido);?>
-
+        <?php foreach ($lista as $list): ?>
                     <tr class="shadow-sm border border-success rounded">
-                      <td class="align-middle"><img src="<?=$utilities->getSrcImage64($list->Foto)?>" class="img-fluid irclrounded-ce avatar"width="25%" /></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
-                        <td class="align-middle"><span class="d-block"> <?php echo $partidoPerteneciente->Nombre; ?> </span></td>
-                       <td class="align-middle"><span class="d-block"> <?php echo $puestoPerteneciente->Nombre; ?> </span></td>
-                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
+                      <td class="align-middle"><img src="<?php echo $utilities->getSrcImage64($list->Logo_Partido); ?>" width="80px" /></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Descripcion; ?> </span></td>
+
+                      <td class="align-middle"><span class="badge badge-primary text-success"></span><?php echo $list->Estado; ?></td>
                       <td class="align-middle">
-                          <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editarCandidato.php?id=<?php echo $list->idCandidatos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->IdPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editPartido.php?id=<?php echo $list->IdPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
-                    <?php endforeach;?>
+        <?php endforeach;?>
 
                   </tbody>
                 </table>

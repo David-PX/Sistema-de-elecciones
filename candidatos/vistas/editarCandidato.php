@@ -1,6 +1,6 @@
 <?php
 require_once '../servicios/CandidatoServiceDatabase.php';
-require_once 'candidato.php';
+require_once '../servicios/candidato.php';
 require_once '../../helpers/Utilities.php';
 
 $candidatos = new CandidatoServiceDatabase();

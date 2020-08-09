@@ -1,6 +1,6 @@
 <?php
 require_once '../../Datos/conexion.php';
-
+require_once 'puestoElectivo.php';
 class PuestoServiceDatabase
 {
     //Atributos

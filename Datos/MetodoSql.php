@@ -24,5 +24,36 @@ class MetodoSql
         $con->cerrarConexion();
 
     }
+    public function GetAll($tabla)
+    {
+
+        $partidos = array();
+
+        $db = $this->context->conectar();
+
+        $stmt = $db->prepare("SELECT * FROM $tabla ORDER BY Estado ASC ");
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows !== 0) {
+
+            while ($row = $result->fetch_object()) {
+
+                $partido = new Partido();
+
+                $partido->InicializarDatos($row->idPartidos, $row->Nombre, $row->Descripcion, $row->Logo_Partido, $row->Estado);
+
+                array_push($partidos, $partido);
+
+            }
+
+        }
+
+        $stmt->close();
+
+        return $partidos;
+
+    }
 
 }
