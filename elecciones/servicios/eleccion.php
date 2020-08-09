@@ -3,18 +3,18 @@
 class Eleccion
 {
 
-    public $id;
-    public $nombre;
-    public $fechaRealizacion;
-    public $estado;
+    public $idElecciones;
+    public $Nombre;
+    public $Fecha_realizacion;
+    public $Estado;
 
-    public function InicializarDatos($id, $nombre, $fechaRealizacion, $estado)
+    public function InicializarDatos($id, $nombre, $Fecha_realizacion, $Estado)
     {
 
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->fechaRealizacion = $fechaRealizacion;
-        $this->estado = $estado;
+        $this->idElecciones = $id;
+        $this->Nombre = $nombre;
+        $this->Fecha_realizacion = $Fecha_realizacion;
+        $this->Estado = $Estado;
 
     }
 

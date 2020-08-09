@@ -1,4 +1,14 @@
+<?php
+require_once '../servicios/PartidoServiceDatabase.php';
+require_once '../servicios/partido.php';
 
+require_once '../../helpers/Utilities.php';
+
+$partido = new PartidoServiceDatabase();
+$lista = $partido->GetList();
+
+$utilities = new Utilities();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,7 +97,7 @@
     </div>
     <div class="form-group col-md-3">
       <label for="apellido">Descripcion</label>
-      <input type="text" class="form-control" id="apellido" name="apellido" required>
+      <input type="text" class="form-control" id="apellido" name="descripcion" required>
     </div>
 
     <div class="form-group col-md-2 ">
@@ -140,19 +150,19 @@
                   </thead>
                   <tbody>
 
-
+        <?php foreach ($lista as $list): ?>
                     <tr class="shadow-sm border border-success rounded">
-                      <td class="align-middle"><img src="" /></td>
-                      <td class="align-middle"><span class="d-block"> </span></td>
-                      <td class="align-middle"><span class="d-block">  </span></td>
+                      <td class="align-middle"><img src="<?php echo $utilities->getSrcImage64($list->Logo_Partido); ?>" width="80px" /></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Descripcion; ?> </span></td>
 
-                      <td class="align-middle"><span class="badge badge-primary text-success"></span></td>
+                      <td class="align-middle"><span class="badge badge-primary text-success"></span><?php echo $list->Estado; ?></td>
                       <td class="align-middle">
-                          <a href="borrarCandidato.php"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editPartido.php">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->IdPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editPartido.php?id=<?php echo $list->IdPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
-
+        <?php endforeach;?>
 
                   </tbody>
                 </table>
@@ -165,7 +175,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../assets/js/app.js"></script>
+<script src="../../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

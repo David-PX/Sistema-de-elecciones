@@ -3,6 +3,8 @@ require_once 'CandidatoServiceDatabase.php';
 require_once 'candidato.php';
 require_once '../../helpers/Utilities.php';
 
+$utilities = new Utilities();
+
 if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
 
     $service = new CandidatoServiceDatabase();

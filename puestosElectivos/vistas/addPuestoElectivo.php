@@ -36,10 +36,11 @@ $lista = $service->GetList();
       </div>
       <div class="menu list-group-flush">
         <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-chair"></i> Puestos electivos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos </a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>

@@ -1,22 +1,22 @@
 <?php
 
-class Ciudadanos
+class Ciudadano
 {
 
-    public $cedula;
-    public $nombre;
-    public $apellido;
-    public $email;
-    public $estado;
+    public $Cedula;
+    public $Nombre;
+    public $Apellido;
+    public $Email;
+    public $Estado;
 
-    public function InicializarDatos($cedula, $nombre, $apellido, $email, $estado)
+    public function InicializarDatos($Cedula, $Nombre, $Apellido, $Email, $Estado)
     {
 
-        $this->cedula = $cedula;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->email = $email;
-        $this->estado = $estado;
+        $this->Cedula = $Cedula;
+        $this->Nombre = $Nombre;
+        $this->Apellido = $Apellido;
+        $this->Email = $Email;
+        $this->Estado = $Estado;
 
     }
 

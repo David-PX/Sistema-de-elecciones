@@ -1,29 +1,29 @@
 <?php
 
-class CandidatoServiceDatabase
+class CiudadanoServiceDatabase
 {
 
     //Atributos
     private $context;
-    private $utilities;
 
     //Constructores
     public function __construct()
     {
-        $this->utilities = new Utilities();
         $this->context = new Conexion();
     }
 
     //Funciones
-    //Obtiene todos los Candidato en la bd
+    //Obtiene todos los Ciudadano en la bd
     public function GetList()
     {
 
-        $candidatos = array();
+        $ciudadanos = array();
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('SELECT * FROM candidatos');
+        //`Cedula`, `Nombre`, `Apellido`, `Email`, `Estado`)
+
+        $stmt = $db->prepare("SELECT * FROM ciudadanos WHERE Estado <> 'Inactivo' ");
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -32,11 +32,11 @@ class CandidatoServiceDatabase
 
             while ($row = $result->fetch_object()) {
 
-                $candidato = new Candidato();
+                $ciudadano = new Ciudadano();
 
-                $candidato->InicializarDatos($row->id, $row->nombre, $row->apellido, $row->partidoPerteneciente, $row->puesto, $row->foto, $row->estado);
+                $ciudadano->InicializarDatos($row->Cedula, $row->Nombre, $row->Apellido, $row->Email, $row->Estado);
 
-                array_push($candidatos, $candidato);
+                array_push($ciudadanos, $ciudadano);
 
             }
 
@@ -44,17 +44,17 @@ class CandidatoServiceDatabase
 
         $stmt->close();
 
-        return $candidatos;
+        return $ciudadanos;
     }
 
-    //Devuelve el candidato del $id proporcionado
+    //Devuelve el ciudadano del $id proporcionado
     public function GetById($id)
     {
         $db = $this->context->conectar();
 
-        $candidato = new Candidato();
+        $ciudadano = new Ciudadano();
 
-        $stmt = $db->prepare('SELECT * FROM candidatos WHERE id = ?');
+        $stmt = $db->prepare('SELECT * FROM ciudadanos WHERE id = ?');
         $stmt->bind_param('i', $id);
         $stmt->execute();
 
@@ -66,7 +66,7 @@ class CandidatoServiceDatabase
 
             while ($row = $result->fetch_object()) {
 
-                $candidato->InitializeData($row->id, $row->nombre, $row->apellido, $row->partidoPerteneciente, $row->puesto, $row->foto, $row->estado);
+                $ciudadano->InicializarDatos($row->Cedula, $row->Nombre, $row->Apellido, $row->Email, $row->Estado);
 
             }
 
@@ -74,64 +74,45 @@ class CandidatoServiceDatabase
 
         $stmt->close();
 
-        return $candidato;
+        return $ciudadano;
 
     }
 
-    //Agrega un candidato a la lista de candidato
-    public function Add($candidato)
+    //Agrega un ciudadano a la lista de ciudadano
+    public function Add($ciudadano)
     {
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('INSERT INTO candidatos (nombre, apellido, partidoPerteneciente, puesto, foto, estado) VALUES (?,?,?,?,?,?)');
+        $stmt = $db->prepare('INSERT INTO ciudadanos (Cedula, Nombre, Apellido, Email, Estado) VALUES (?,?,?,?,?)');
 
-        $stmt->bind_param('ssisbs', $candidato->nombre, $candidato->apellido, $candidato->partidoPerteneciente, $candidato->puesto, $candidato->foto, $candidato->estado);
-
-        //Insertar imagen
-
-        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
-
-            $tmpName = $_FILES['foto']['tmp_name'];
-
-            $photo = fopen($tmpName, 'rb');
-
-            $contents = fread($photo, filesize($tmpName));
-
-            $user->profilePhoto = $contents;
-
-            fclose($photo);
-
-            //Enviar imagen
-            $stmt->send_long_data(4, $user->profilePhoto);
-
-        }
+        $stmt->bind_param('sssss', $ciudadano->Cedula, $ciudadano->Nombre, $ciudadano->Apellido, $ciudadano->Email, $ciudadano->Estado);
 
         $stmt->execute();
         $stmt->close();
 
     }
 
-    //Borrar el candidato de la lista de candidato, con el $id proporcionado
+    //Borrar el ciudadano de la lista de ciudadano, con el $id proporcionado
     public function Delete($id)
     {
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("UPDATE candidatos SET Estado = 'Inactivo' WHERE idCandidatos=?");
+        $stmt = $db->prepare("UPDATE ciudadanos SET Estado = 'Inactivo' WHERE idCiudadanos=?");
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $stmt->close();
     }
 
-    //Actualizar candidato
-    public function Update($id, $candidato)
+    //Actualizar ciudadano
+    public function Update($id, $ciudadano)
     {
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('UPDATE candidatos SET nombre = ?, apellido = ?, partidoPerteneciente = ?, puesto = ?, foto = ?, estado = ? WHERE id = ?');
+        $stmt = $db->prepare('UPDATE ciudadanos SET Nombre = ?, Apellido = ?, Email = ?, Estado = ? WHERE id = ?');
 
-        $stmt->bind_param('ssisbsi', $candidato->nombre, $candidato->apellido, $candidato->partidoPerteneciente, $candidato->puesto, $candidato->foto, $candidato->estado, $id);
+        $stmt->bind_param('ssssi', $ciudadano->Nombre, $ciudadano->Apellido, $ciudadano->Email, $ciudadano->Estado . $id);
 
         $stmt->execute();
         $stmt->close();

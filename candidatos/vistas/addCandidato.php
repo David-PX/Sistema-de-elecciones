@@ -1,12 +1,17 @@
 <?php
 require_once '../servicios/CandidatoServiceDatabase.php';
 require_once '../servicios/candidato.php';
-require_once '../../puestosElectivos/servicios/PuestoServiceDataBae.php';
+require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
+require_once '../../partidos/servicios/PartidoServiceDataBase.php';
 require_once '../../helpers/Utilities.php';
 
 $candidatos = new CandidatoServiceDatabase();
+$partido = new PartidoServiceDataBase();
+$puesto = new PuestoServiceDataBase();
 $lista = $candidatos->GetList();
-var_dump($lista);
+$lista1 = $partido->GetList();
+$lista2 = $puesto->GetList();
+
 $utilities = new Utilities();
 
 ?>
@@ -37,7 +42,7 @@ $utilities = new Utilities();
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
@@ -117,16 +122,33 @@ $utilities = new Utilities();
 
   <div class="form-row">
       <div class="form-group col-md-6">
-    <label for="exampleFormControlSelect1">Partidos</label>
+    <label for="exampleFormControlSelect1">Seleccione su partido</label>
     <select class="form-control" id="exampleFormControlSelect1" name="partido">
 
+      <?php foreach ($lista1 as $lt1): ?>
 
+
+
+        <option value="<?php echo $lt1->idPartidos; ?>"> <?php echo $lt1->Nombre; ?> </option>
+
+
+
+
+        <?php endforeach;?>
 
     </select>
   </div>
     <div class="form-group col-md-6">
-    <label for="inputAddress2">Puesto</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto" required>
+    <label for="puesto">Seleccione su Puesto electivo</label>
+    <select class="form-control" id="puesto" name="puesto">
+
+      <?php foreach ($lista2 as $lt2): ?>
+
+        <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
+
+
+ <?php endforeach;?>
+</select>
     </div>
 
   </div>
@@ -163,12 +185,15 @@ $utilities = new Utilities();
                   <tbody>
                       <?php foreach ($lista as $list): ?>
 
+                      <?php $puestoPerteneciente = $puesto->GetById($list->Puesto);?>
+                      <?php $partidoPerteneciente = $partido->GetById($list->Partido);?>
+
                     <tr class="shadow-sm border border-success rounded">
                       <td class="align-middle"><img src="<?=$utilities->getSrcImage64($list->Foto)?>" class="img-fluid irclrounded-ce avatar"width="25%" /></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
-                        <td class="align-middle"><span class="d-block"> <?php echo $list->Partido ?> </span></td>
-                       <td class="align-middle"><span class="d-block"> <?php echo $list->Puesto ?> </span></td>
+                        <td class="align-middle"><span class="d-block"> <?php echo $partidoPerteneciente->Nombre; ?> </span></td>
+                       <td class="align-middle"><span class="d-block"> <?php echo $puestoPerteneciente->Nombre; ?> </span></td>
                       <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
                           <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
@@ -188,7 +213,7 @@ $utilities = new Utilities();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../assets/js/app.js"></script>
+<script src="../../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

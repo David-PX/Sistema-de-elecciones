@@ -1,16 +1,14 @@
 <?php
-
-require_once '../servicios/PartidoServiceDataBase.php';
-require_once '../../helpers/Utilities.php';
-
-$utilities = new Utilities();
-$service = new PartidoServiceDataBase();
+require_once '../servicios/EleccioneServiceDataBase.php';
 
 $id = $_GET['id'];
+
+$service = new EleccionServiceDatabase();
 
 $lista = $service->GetById($id);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +36,9 @@ $lista = $service->GetById($id);
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
+        <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-chair"></i> Puestos electivos</a>
+        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos </a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
@@ -89,34 +87,14 @@ $lista = $service->GetById($id);
                     <div class="card card-elec">
 
   <div class="card-body">
-<form method="POST" action="../servicios/edit.php?id=<?php echo $id; ?>" enctype="multipart/form-data">
-  <div class="form-row">
+<form method="POST" action="../servicios/edit.php?id=<?php echo $id; ?>" >
 
-    <div class="form-group col-md-3">
+
+
+    <div class="form-group">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
     </div>
-    <div class="form-group col-md-3">
-      <label for="apellido">Descripcion</label>
-      <input type="text" class="form-control" id="apellido" name="descripcion" required value="<?php echo $lista->Descripcion; ?>">
-    </div>
-
-    <div class="form-group col-md-2 ">
-        <div id="preview" class="img-thumbnail border border-success rounded float-left " >
-            <img src="<?php echo $utilities->getSrcImage64($lista->Logo_Partido); ?>" alt="" srcset="" width="100px" >
-        </div>
-
-      </div>
-
-       <div class="form-group col-md-2 mt-4 mr-4">
-
-
-    <input type="file" class="form-control custom-file-input" id="file" name="foto" value="<?php $lista->Logo_Partido;?>">
-    <label for="file" class="custom-file-label">foto</label>
-  </div>
-
-  </div>
-
 
 
 
@@ -129,20 +107,21 @@ $lista = $service->GetById($id);
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Guardar</button>
+  <button type="submit" class="btn btn-success">Actualizar Elecciones</button>
 </form>
   </div>
 </div>
-                  </div>
+ </div>
 </div>
 <!---->
+
 
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../../assets/js/app.js"></script>
+<script src="../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

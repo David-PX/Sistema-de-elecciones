@@ -5,12 +5,10 @@ class EleccionServiceDatabase
 
     //Atributos
     private $context;
-    private $utilities;
 
     //Constructores
     public function __construct()
     {
-        $this->utilities = new Utilities();
         $this->context = new Conexion();
     }
 
@@ -23,8 +21,8 @@ class EleccionServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("SELECT * FROM elecciones WHERE estado <> 'inactivo' ");
-        $stmt->bind_param('i', $user->id);
+        $stmt = $db->prepare("SELECT * FROM elecciones WHERE Estado <> 'inactivo' ");
+
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -35,7 +33,7 @@ class EleccionServiceDatabase
 
                 $eleccion = new Eleccion();
 
-                $eleccion->InicializarDatos($row->id, $row->nombre, $row->fechaRealizacion, $row->estado);
+                $eleccion->InicializarDatos($row->idElecciones, $row->Nombre, $row->Fecha_realizacion, $row->Estado);
 
                 array_push($elecciones, $eleccion);
 
@@ -67,7 +65,7 @@ class EleccionServiceDatabase
 
             while ($row = $result->fetch_object()) {
 
-                $eleccion->InitializeData($row->id, $row->nombre, $row->fechaRealizacion, $row->estado);
+                $eleccion->InicializarDatos($row->idElecciones, $row->Nombre, $row->Fecha_realizacion, $row->Estado);
 
             }
 
@@ -85,28 +83,9 @@ class EleccionServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('INSERT INTO elecciones (nombre, Fecha_realizacion, estado) VALUES (?,?,?)');
+        $stmt = $db->prepare('INSERT INTO elecciones (Nombre, Estado) VALUES (?,?)');
 
-        $stmt->bind_param('sss', $eleccion->nombre, $eleccion->fechaRealizacion, $candidato->estado);
-
-        //Insertar imagen
-        /*
-        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
-
-        $tmpName = $_FILES['foto']['tmp_name'];
-
-        $photo = fopen($tmpName, 'rb');
-
-        $contents = fread($photo, filesize($tmpName));
-
-        $user->profilePhoto = $contents;
-
-        fclose($photo);
-
-        //Enviar imagen
-        $stmt->send_long_data(4, $user->profilePhoto);
-
-        }*/
+        $stmt->bind_param('ss', $eleccion->Nombre, $eleccion->Estado);
 
         $stmt->execute();
         $stmt->close();
@@ -130,9 +109,9 @@ class EleccionServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('UPDATE candidatos SET nombre = ?, Fecha_realizacion = ?,  estado = ? WHERE id = ?');
+        $stmt = $db->prepare('UPDATE elecciones SET Nombre = ?,   Estado = ? WHERE idElecciones = ?');
 
-        $stmt->bind_param('sssi', $eleccion->nombre, $eleccion->fechaRealizacion, $eleccion->estado, $id);
+        $stmt->bind_param('ssi', $eleccion->Nombre, $eleccion->Estado, $id);
 
         $stmt->execute();
         $stmt->close();

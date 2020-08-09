@@ -1,3 +1,13 @@
+<?php
+require_once '../../Datos/conexion.php';
+require_once '../servicios/eleccion.php';
+require_once '../../helpers/Utilities.php';
+require_once '../servicios/EleccioneServiceDataBase.php';
+
+$service = new EleccionServiceDatabase();
+$lista = $service->GetList();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,10 +37,11 @@
       </div>
       <div class="menu list-group-flush">
         <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+          <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-chair"></i> Puestos electivos</a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos </a>
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+
         <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>
@@ -78,19 +89,14 @@
 
   <div class="card-body">
 <form method="POST" action="../servicios/add.php" >
-  <div class="form-row">
 
 
-    <div class="form-group col-md-4">
+
+    <div class="form-group">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required>
     </div>
-    <div class="form-group col-md-8">
-      <label for="exampleFormControlTextarea1">Descripcion</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion"rows="3"></textarea>
-    </div>
 
-  </div>
 
 
 
@@ -102,7 +108,7 @@
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Guardar</button>
+  <button type="submit" class="btn btn-success">Crear Elecciones</button>
 </form>
   </div>
 </div>
@@ -115,31 +121,31 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="col"><small class="font-weight-bold">Puestos Electivos<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Elecciones Activas<small></th>
 
 
-                       <th scope="col"><small class="font-weight-bold">Descripcion<small></th>
+                       <th scope="col"><small class="font-weight-bold">Fecha de Realizacion<small></th>
 
                          <th scope="col"><small class="font-weight-bold">Estado<small></th>
                     </tr>
                   </thead>
                   <tbody>
- <?php foreach ($lista as $list): ?>
 
+               <?php foreach ($lista as $list): ?>
                     <tr class="shadow-sm border border-success rounded">
 
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?> </span></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Descripcion; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Fecha_realizacion; ?> </span></td>
 
 
-                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado; ?> </span></td>
+                      <td class="align-middle"><span class="badge badge-primary text-success"><?php echo $list->Estado; ?>  </span></td>
                       <td class="align-middle">
-                          <a href="../servicios/borrarPuesto.php?id=<?php echo $list->idPuesto_Electivo; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editPuestoElectivo.php?id=<?php echo $list->idPuesto_Electivo; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->idElecciones; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editEleccion.php?id=<?php echo $list->idElecciones; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
 
                     </tr>
- <?php endforeach;?>
+               <?php endforeach;?>
 
                   </tbody>
                 </table>
