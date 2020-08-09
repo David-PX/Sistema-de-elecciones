@@ -38,12 +38,14 @@ $utilities = new Utilities();
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
+       <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="../../elecciones/vistas/addElecciones.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+        <a href="../../puestosElectivos/vistas/addPuestoElectivo.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos Electivos</a>
+
+        <a href="../../partidos/vistas/addPartido.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
+         <a href="../../candidatos/vistas/addCandidato.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos</a>
+
+        <a href="../../ciudadanos/vistas/addCiudadano.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>
     <!-- Fin sidebar -->
@@ -91,29 +93,17 @@ $utilities = new Utilities();
   <div class="card-body">
 <form method="POST" action="../servicios/add.php" enctype="multipart/form-data">
   <div class="form-row">
-      <div class="form-group col-md-2 ">
-        <div id="preview" class="img-thumbnail border border-success rounded float-left " >
-            <img src="../../assets/img/chico.png" alt="" srcset="" width="100px" >
-        </div>
-
-      </div>
-
-       <div class="form-group col-md-2 mt-4 mr-4">
 
 
-    <input type="file" class="form-control custom-file-input" id="file" name="foto">
-    <label for="file" class="custom-file-label">foto</label>
-  </div>
-
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
       <label for="cedula">Cedula</label>
       <input type="text" class="form-control" id="cedula" name="cedula" required>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required>
     </div>
-     <div class="form-group col-md-2">
+     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
       <input type="text" class="form-control" id="apellido" name="apellido" required>
     </div>
@@ -151,7 +141,7 @@ $utilities = new Utilities();
                   <thead>
                     <tr>
                       <th colspan="col"><small class="font-weight-bold">Ciudadanos<small></th>
-                      <th scope="col"><small class="font-weight-bold">Nombre<small></th>
+     <th scope="col"><small class="font-weight-bold">Nombre<small></th>
                       <th scope="col"><small class="font-weight-bold">Apellido<small></th>
                        <th scope="col"><small class="font-weight-bold">Correo<small></th>
                        <th scope="col"><small class="font-weight-bold">Estado<small></th>
@@ -164,14 +154,14 @@ $utilities = new Utilities();
 
 
                     <tr class="shadow-sm border border-success rounded">
-                      <td class="align-middle"><img src="<?=$utilities->getSrcImage64($list->Foto)?>" class="img-fluid irclrounded-ce avatar"width="25%" /></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Cedula; ?></span></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Email; ?> </span></td>
                       <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
-                          <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editarCandidato.php?id=<?php echo $list->idCandidatos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->Cedula; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editCiudadano.php?id=<?php echo $list->Cedula; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
                     <?php endforeach;?>

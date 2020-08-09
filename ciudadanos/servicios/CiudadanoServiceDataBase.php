@@ -54,8 +54,8 @@ class CiudadanoServiceDatabase
 
         $ciudadano = new Ciudadano();
 
-        $stmt = $db->prepare('SELECT * FROM ciudadanos WHERE id = ?');
-        $stmt->bind_param('i', $id);
+        $stmt = $db->prepare('SELECT * FROM ciudadanos WHERE Cedula = ?');
+        $stmt->bind_param('s', $id);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -98,8 +98,8 @@ class CiudadanoServiceDatabase
     {
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("UPDATE ciudadanos SET Estado = 'Inactivo' WHERE idCiudadanos=?");
-        $stmt->bind_param('i', $id);
+        $stmt = $db->prepare("UPDATE ciudadanos SET Estado = 'Inactivo' WHERE Cedula=?");
+        $stmt->bind_param('s', $id);
         $stmt->execute();
         $stmt->close();
     }
@@ -110,9 +110,9 @@ class CiudadanoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('UPDATE ciudadanos SET Nombre = ?, Apellido = ?, Email = ?, Estado = ? WHERE id = ?');
+        $stmt = $db->prepare('UPDATE ciudadanos SET Nombre = ?, Apellido = ?, Email = ?, Estado = ? WHERE Cedula = ?');
 
-        $stmt->bind_param('ssssi', $ciudadano->Nombre, $ciudadano->Apellido, $ciudadano->Email, $ciudadano->Estado . $id);
+        $stmt->bind_param('sssss', $ciudadano->Nombre, $ciudadano->Apellido, $ciudadano->Email, $ciudadano->Estado, $id);
 
         $stmt->execute();
         $stmt->close();
