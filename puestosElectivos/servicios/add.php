@@ -1,8 +1,12 @@
 <?php
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/ingresarAdmin.php');
 
 require_once 'puestoElectivo.php';
 require_once '../../helpers/Utilities.php';
 require_once 'PuestoServiceDataBase.php';
+require_once '../../Datos/conexion.php';
 
 if (isset($_POST['nombre']) && isset($_POST['descripcion']) && isset($_POST['activo'])) {
 

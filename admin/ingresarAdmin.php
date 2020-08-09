@@ -1,11 +1,22 @@
 
 <?php
+
 require_once "../Datos/conexion.php";
 require_once "AdminService.php";
+session_start();
+if (isset($_SESSION['admin'])) {
+    header('Location: menuAdmin.php');
+
+}
+
 if (isset($_POST['usuario']) && isset($_POST['contraseña'])) {
 
     $service = new AdminService();
-    if ($service->Login($_POST['usuario'], $_POST['contraseña'])) {
+
+    $admin = $service->Login($_POST['usuario'], $_POST['contraseña']);
+    if ($admin) {
+
+        $_SESSION['admin'] = json_encode($admin);
         header('Location: menuAdmin.php');
     } else {
         echo "<div class='alert alert-danger'> Usuario o contraseña incorrecto </div>";

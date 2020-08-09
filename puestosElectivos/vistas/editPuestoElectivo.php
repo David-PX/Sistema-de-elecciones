@@ -3,6 +3,7 @@
 require_once '../servicios/puestoElectivo.php';
 require_once '../../helpers/Utilities.php';
 require_once '../servicios/PuestoServiceDataBase.php';
+require_once '../../Datos/conexion.php';
 
 $id = $_GET['id'];
 
@@ -74,10 +75,7 @@ var_dump($lista);
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

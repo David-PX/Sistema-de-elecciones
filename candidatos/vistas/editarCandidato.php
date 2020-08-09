@@ -1,4 +1,9 @@
 <?php
+
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/ingresarAdmin.php');
+
 require_once '../servicios/CandidatoServiceDataBase.php';
 require_once '../servicios/candidato.php';
 require_once '../../helpers/Utilities.php';
@@ -84,7 +89,7 @@ $lista2 = $puesto->GetList();
                   <a class="dropdown-item" href="#">Mi perfil</a>
                   <a class="dropdown-item" href="#">Suscripciones</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

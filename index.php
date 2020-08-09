@@ -22,7 +22,7 @@
 <div class="col-md-3"></div>
 <div class="col-md-6">
 
-<form class="form-container border border-success border-2" method="post" action="ciudadanos/validarCiudadano.php">
+<form class="form-container border border-success border-2" method="post" action="ciudadanos/servicios/validarCiudadano.php">
   <h3 class=" border-bottom border-success">Iniciar sesion</h3>
   <div class="form-group inputWithIcon">
     <label for="cedula">Cedula</label>

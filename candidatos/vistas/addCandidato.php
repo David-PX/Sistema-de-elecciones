@@ -1,4 +1,9 @@
 <?php
+
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/ingresarAdmin.php');
+
 require_once '../servicios/CandidatoServiceDatabase.php';
 require_once '../servicios/candidato.php';
 require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
@@ -78,10 +83,8 @@ $utilities = new Utilities();
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>
@@ -198,7 +201,7 @@ $utilities = new Utilities();
                        <td class="align-middle"><span class="d-block"> <?php echo $puestoPerteneciente->Nombre; ?> </span></td>
                       <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
-                          <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                          <a href="../servicios/borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
                          <a href="editarCandidato.php?id=<?php echo $list->idCandidatos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>

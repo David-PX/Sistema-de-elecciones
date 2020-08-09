@@ -1,4 +1,8 @@
 <?php
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/ingresarAdmin.php');
+
 require_once '../../Datos/conexion.php';
 require_once '../servicios/eleccion.php';
 require_once '../../helpers/Utilities.php';
@@ -19,14 +23,9 @@ $lista = $service->GetList();
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-
-
-
-<title>Inicio de sesion.</title>
+    <title>Elecciones</title>
 </head>
 <body>
-
-
 
 <div class="d-flex" id="content-wrapper">
 
@@ -72,10 +71,7 @@ $lista = $service->GetList();
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

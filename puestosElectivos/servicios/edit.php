@@ -1,4 +1,8 @@
 <?php
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/ingresarAdmin.php');
+
 require_once '../servicios/PuestoServiceDatabase.php';
 require_once 'puestoElectivo.php';
 require_once '../../helpers/Utilities.php';

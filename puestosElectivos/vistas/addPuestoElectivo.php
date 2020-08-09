@@ -3,6 +3,7 @@
 require_once '../servicios/puestoElectivo.php';
 require_once '../../helpers/Utilities.php';
 require_once '../servicios/PuestoServiceDataBase.php';
+require_once '../../Datos/conexion.php';
 
 $service = new PuestoServiceDatabase();
 $lista = $service->GetList();
@@ -71,10 +72,7 @@ $lista = $service->GetList();
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>
@@ -93,8 +91,15 @@ $lista = $service->GetList();
 
 
     <div class="form-group col-md-4">
-      <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required>
+      <label for="exampleFormControlSelect1">Ingrese el puesto electivo</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="nombre">
+
+     <option value="Presidente">Presidente</option>
+     <option value="Alcalde">Alcalde</option>
+     <option value="Senador">Senador</option>
+     <option value="Diputado">Diputado</option>
+
+    </select>
     </div>
     <div class="form-group col-md-8">
       <label for="exampleFormControlTextarea1">Descripcion</label>
