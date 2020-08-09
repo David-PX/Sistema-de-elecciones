@@ -1,16 +1,12 @@
 <?php
-require_once '../servicios/CandidatoServiceDatabase.php';
-require_once '../servicios/candidato.php';
-require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
-require_once '../../partidos/servicios/PartidoServiceDataBase.php';
+require_once '../servicios/CiudadanoServiceDatabase.php';
+require_once '../servicios/ciudadano.php';
+
 require_once '../../helpers/Utilities.php';
 
-$candidatos = new CandidatoServiceDatabase();
-$partido = new PartidoServiceDataBase();
-$puesto = new PuestoServiceDataBase();
-$lista = $candidatos->GetList();
-$lista1 = $partido->GetList();
-$lista2 = $puesto->GetList();
+$ciudadano = new CiudadanoServiceDatabase();
+
+$lista = $ciudadano->GetList();
 
 $utilities = new Utilities();
 
@@ -110,10 +106,14 @@ $utilities = new Utilities();
   </div>
 
     <div class="form-group col-md-3">
+      <label for="cedula">Cedula</label>
+      <input type="text" class="form-control" id="cedula" name="cedula" required>
+    </div>
+    <div class="form-group col-md-2">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required>
     </div>
-    <div class="form-group col-md-4">
+     <div class="form-group col-md-2">
       <label for="apellido">Apellido</label>
       <input type="text" class="form-control" id="apellido" name="apellido" required>
     </div>
@@ -122,34 +122,10 @@ $utilities = new Utilities();
 
   <div class="form-row">
       <div class="form-group col-md-6">
-    <label for="exampleFormControlSelect1">Seleccione su partido</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="partido">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" required>
 
-      <?php foreach ($lista1 as $lt1): ?>
-
-
-
-        <option value="<?php echo $lt1->idPartidos; ?>"> <?php echo $lt1->Nombre; ?> </option>
-
-
-
-
-        <?php endforeach;?>
-
-    </select>
   </div>
-    <div class="form-group col-md-6">
-      <label for="puesto">Seleccione su Puesto electivo</label>
-      <select class="form-control" id="puesto" name="puesto">
-
-        <?php foreach ($lista2 as $lt2): ?>
-
-          <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
-
-
-  <?php endforeach;?>
-  </select>
-    </div>
 
   </div>
 
@@ -174,26 +150,24 @@ $utilities = new Utilities();
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="col"><small class="font-weight-bold">Candidatos<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Ciudadanos<small></th>
                       <th scope="col"><small class="font-weight-bold">Nombre<small></th>
                       <th scope="col"><small class="font-weight-bold">Apellido<small></th>
-                       <th scope="col"><small class="font-weight-bold">Partido<small></th>
-                        <th scope="col"><small class="font-weight-bold">Puesto<small></th>
-                         <th scope="col"><small class="font-weight-bold">Estado<small></th>
+                       <th scope="col"><small class="font-weight-bold">Correo<small></th>
+                       <th scope="col"><small class="font-weight-bold">Estado<small></th>
+
                     </tr>
                   </thead>
                   <tbody>
                       <?php foreach ($lista as $list): ?>
 
-                      <?php $puestoPerteneciente = $puesto->GetById($list->Puesto);?>
-                      <?php $partidoPerteneciente = $partido->GetById($list->Partido);?>
+
 
                     <tr class="shadow-sm border border-success rounded">
                       <td class="align-middle"><img src="<?=$utilities->getSrcImage64($list->Foto)?>" class="img-fluid irclrounded-ce avatar"width="25%" /></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
                       <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
-                        <td class="align-middle"><span class="d-block"> <?php echo $partidoPerteneciente->Nombre; ?> </span></td>
-                       <td class="align-middle"><span class="d-block"> <?php echo $puestoPerteneciente->Nombre; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Email; ?> </span></td>
                       <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
                           <a href="borrarCandidato.php?id=<?php echo $list->idCandidatos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>

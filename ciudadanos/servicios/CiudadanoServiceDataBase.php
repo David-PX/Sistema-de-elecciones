@@ -1,5 +1,5 @@
 <?php
-
+require_once '../../Datos/conexion.php';
 class CiudadanoServiceDatabase
 {
 
