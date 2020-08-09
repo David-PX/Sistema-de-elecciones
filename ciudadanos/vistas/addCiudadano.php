@@ -1,14 +1,16 @@
 <?php
-require_once '../../Datos/conexion.php';
-require_once '../servicios/eleccion.php';
-require_once '../../helpers/Utilities.php';
-require_once '../servicios/EleccioneServiceDataBase.php';
+require_once '../servicios/CiudadanoServiceDatabase.php';
+require_once '../servicios/ciudadano.php';
 
-$service = new EleccionServiceDatabase();
-$lista = $service->GetList();
+require_once '../../helpers/Utilities.php';
+
+$ciudadano = new CiudadanoServiceDatabase();
+
+$lista = $ciudadano->GetList();
+
+$utilities = new Utilities();
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,17 +91,33 @@ $lista = $service->GetList();
                     <div class="card card-elec">
 
   <div class="card-body">
-<form method="POST" action="../servicios/add.php" >
+<form method="POST" action="../servicios/add.php" enctype="multipart/form-data">
+  <div class="form-row">
 
 
-
-    <div class="form-group">
+    <div class="form-group col-md-4">
+      <label for="cedula">Cedula</label>
+      <input type="text" class="form-control" id="cedula" name="cedula" required>
+    </div>
+    <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required>
     </div>
+     <div class="form-group col-md-4">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" id="apellido" name="apellido" required>
+    </div>
 
+  </div>
 
+  <div class="form-row">
+      <div class="form-group col-md-6">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" required>
 
+  </div>
+
+  </div>
 
   <div class="form-group">
     <div class="form-check">
@@ -109,11 +127,11 @@ $lista = $service->GetList();
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Crear Elecciones</button>
+  <button type="submit" class="btn btn-success">Guardar</button>
 </form>
   </div>
 </div>
- </div>
+                  </div>
 </div>
 <!---->
 <!-- Tabla usuarios -->
@@ -122,31 +140,31 @@ $lista = $service->GetList();
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="col"><small class="font-weight-bold">Elecciones Activas<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Ciudadanos<small></th>
+     <th scope="col"><small class="font-weight-bold">Nombre<small></th>
+                      <th scope="col"><small class="font-weight-bold">Apellido<small></th>
+                       <th scope="col"><small class="font-weight-bold">Correo<small></th>
+                       <th scope="col"><small class="font-weight-bold">Estado<small></th>
 
-
-                       <th scope="col"><small class="font-weight-bold">Fecha de Realizacion<small></th>
-
-                         <th scope="col"><small class="font-weight-bold">Estado<small></th>
                     </tr>
                   </thead>
                   <tbody>
+                      <?php foreach ($lista as $list): ?>
 
-               <?php foreach ($lista as $list): ?>
+
+
                     <tr class="shadow-sm border border-success rounded">
-
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?> </span></td>
-                      <td class="align-middle"><span class="d-block"> <?php echo $list->Fecha_realizacion; ?> </span></td>
-
-
-                      <td class="align-middle"><span class="badge badge-primary text-success"><?php echo $list->Estado; ?>  </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Cedula; ?></span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Nombre; ?></span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Apellido; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list->Email; ?> </span></td>
+                      <td class="align-middle"><span class="badge badge-primary text-success"> <?php echo $list->Estado ?></span></td>
                       <td class="align-middle">
-                          <a href="../servicios/borrar.php?id=<?php echo $list->idElecciones; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editEleccion.php?id=<?php echo $list->idElecciones; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
-
+                          <a href="../servicios/borrar.php?id=<?php echo $list->Cedula; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editCiudadano.php?id=<?php echo $list->Cedula; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
-               <?php endforeach;?>
+                    <?php endforeach;?>
 
                   </tbody>
                 </table>
@@ -159,7 +177,7 @@ $lista = $service->GetList();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../assets/js/app.js"></script>
+<script src="../../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

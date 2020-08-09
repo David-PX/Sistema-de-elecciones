@@ -1,34 +1,23 @@
 <?php
-require_once '../servicios/CandidatoServiceDatabase.php';
+require_once '../servicios/CandidatoServiceDataBase.php';
 require_once '../servicios/candidato.php';
 require_once '../../helpers/Utilities.php';
+require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
+require_once '../../partidos/servicios/PartidoServiceDataBase.php';
 
-$candidatos = new CandidatoServiceDatabase();
+$candidato = new CandidatoServiceDatabase();
+$partido = new PartidoServiceDataBase();
+$puesto = new PuestoServiceDatabase();
 $utilities = new Utilities();
-$lista = $candidatos->GetList();
-$entidad = new Candidato();
 
-if (isset($_GET['id'])) {
+$id = $_GET['id'];
 
-    $id = $_GET['id'];
-
-    $candidato = $candidatos->GetById($id);
-
-    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
-        $activo = $utilities->getActive();
-
-        $image = (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) ? null : $candidato->Foto;
-
-        $entidad->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], $image, $activo);
-
-        $candidatos->Update($id, $entidad);
-
-        header('Location: addCandidato.php');
-
-    }
-}
+$lista = $candidato->GetById($id);
+$lista1 = $partido->GetList();
+$lista2 = $puesto->GetList();
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,12 +45,14 @@ if (isset($_GET['id'])) {
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-        <a href="../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
+       <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+        <a href="../../elecciones/vistas/addElecciones.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+        <a href="../../puestosElectivos/vistas/addPuestoElectivo.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos Electivos</a>
+
+        <a href="../../partidos/vistas/addPartido.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
+         <a href="../../candidatos/vistas/addCandidato.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos</a>
+
+        <a href="../../ciudadanos/vistas/addCiudadano.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>
     <!-- Fin sidebar -->
@@ -107,12 +98,12 @@ if (isset($_GET['id'])) {
                     <div class="card card-elec">
 
   <div class="card-body">
-<form method="POST" action="editarCandidato.php?id=<?=$candidato->idCandidatos;?>" enctype="multipart/form-data">
-<input type="text" hidden="" value="<?php echo $id ?>" name="id">
+<form method="POST" action="../servicios/edit.php?id=<?=$lista->idCandidatos;?>" enctype="multipart/form-data">
+
   <div class="form-row">
       <div class="form-group col-md-2 ">
         <div id="preview" class="img-thumbnail border border-success rounded float-left fotoFixed" >
-            <img src=" <?=$utilities->getSrcImage64($candidato->Foto);?>" alt="" srcset="" width="100px" >
+            <img src=" <?=$utilities->getSrcImage64($lista->Foto);?>" alt="" srcset="" width="100px" >
         </div>
 
       </div>
@@ -120,30 +111,51 @@ if (isset($_GET['id'])) {
        <div class="form-group col-md-2 mt-4 mr-4">
 
 
-    <input type="file" class="form-control custom-file-input" id="file" name="foto" value="<?php $candidato->Foto;?>">
+    <input type="file" class="form-control custom-file-input" id="file" name="foto" value="<?php $lista->Foto;?>">
 
     <label for="file" class="custom-file-label">foto</label>
   </div>
 
     <div class="form-group col-md-3">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $candidato->Nombre; ?> ">
+      <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?> ">
     </div>
     <div class="form-group col-md-4">
       <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php echo $candidato->Apellido; ?>">
+      <input type="text" class="form-control" id="apellido" name="apellido" required value="<?php echo $lista->Apellido; ?>">
     </div>
 
   </div>
 
   <div class="form-row">
       <div class="form-group col-md-6">
-    <label for="inputAddress1">Partido</label>
-    <input type="text" class="form-control" id="inputAddress1" placeholder="Partido al que pertenece" name="partido" required value="<?php echo $candidato->Partido; ?>">
+    <label for="exampleFormControlSelect1">Seleccione su partido</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="partido">
+
+      <?php foreach ($lista1 as $lt1): ?>
+
+
+
+        <option value="<?php echo $lt1->idPartidos; ?>"> <?php echo $lt1->Nombre; ?> </option>
+
+
+
+
+        <?php endforeach;?>
+
+    </select>
     </div>
     <div class="form-group col-md-6">
-    <label for="inputAddress2">Puesto</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Puesto al que aspira" name="puesto" required value="<?php echo $candidato->Puesto; ?>">
+    <label for="puesto">Seleccione su Puesto electivo</label>
+    <select class="form-control" id="puesto" name="puesto">
+
+      <?php foreach ($lista2 as $lt2): ?>
+
+        <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
+
+
+ <?php endforeach;?>
+</select>
     </div>
 
   </div>
@@ -170,7 +182,7 @@ if (isset($_GET['id'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../assets/js/app.js"></script>
+<script src="../../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

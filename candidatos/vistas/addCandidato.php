@@ -43,11 +43,13 @@ $utilities = new Utilities();
       </div>
       <div class="menu list-group-flush">
         <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0 active"><i class="fas fa-user"></i> Candidatos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos electivos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
-        <a href="#" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
+        <a href="../../elecciones/vistas/addElecciones.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
+        <a href="../../puestosElectivos/vistas/addPuestoElectivo.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos Electivos</a>
+
+        <a href="../../partidos/vistas/addPartido.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-caravan"></i> Partidos</a>
+         <a href="../../candidatos/vistas/addCandidato.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-user"></i> Candidatos</a>
+
+        <a href="../../ciudadanos/vistas/addCiudadano.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"> <i class="fas fa-users"></i> Ciudadanos</a>
       </div>
     </div>
     <!-- Fin sidebar -->
@@ -139,16 +141,16 @@ $utilities = new Utilities();
     </select>
   </div>
     <div class="form-group col-md-6">
-    <label for="puesto">Seleccione su Puesto electivo</label>
-    <select class="form-control" id="puesto" name="puesto">
+      <label for="puesto">Seleccione su Puesto electivo</label>
+      <select class="form-control" id="puesto" name="puesto">
 
-      <?php foreach ($lista2 as $lt2): ?>
+        <?php foreach ($lista2 as $lt2): ?>
 
-        <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
+          <option value="<?php echo $lt2->idPuesto_Electivo; ?>"> <?php echo $lt2->Nombre; ?> </option>
 
 
- <?php endforeach;?>
-</select>
+  <?php endforeach;?>
+  </select>
     </div>
 
   </div>
