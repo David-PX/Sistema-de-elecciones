@@ -5,9 +5,14 @@ require_once "Datos/MetodoSql.php";
 if (isset($_POST['cedula'])) {
     $m = new MetodoSql();
     $obj = $m->buscarCedula($_POST['cedula']);
+    $eleccion = $m->buscarEleccion();
 
-    if ($obj == true && $obj[0]['Estado'] != 'Inactivo') {
+    if ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] != 'Inactivo') {
+
         header('Location: vistaElector/menuPrincipal.php');
+
+    } elseif ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] == 'Inactivo') {
+        echo "<div class='alert alert-danger'>No hay ninguna eleccion activa</div>";
 
     } elseif ($obj == true && $obj[0]['Estado'] == 'Inactivo') {
         echo "<div class='alert alert-danger'>Este usuario esta inactivo, no podra realizar el proceso de eleccion</div>";

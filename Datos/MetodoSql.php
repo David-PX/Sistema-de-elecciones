@@ -24,6 +24,17 @@ class MetodoSql
         $con->cerrarConexion();
 
     }
+    public function buscarEleccion()
+    {
+        $con = $this->conexion;
+        $conexion = $con->conectar();
+        $sql = "SELECT * FROM elecciones WHERE Fecha_realizacion = ( SELECT MAX(Fecha_realizacion) FROM elecciones )  ";
+        $result = mysqli_query($conexion, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $con->cerrarConexion();
+
+    }
     public function GetAll($tabla)
     {
 
