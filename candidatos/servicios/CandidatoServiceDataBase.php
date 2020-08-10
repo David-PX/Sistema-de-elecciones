@@ -159,4 +159,22 @@ class CandidatoServiceDatabase
 
     }
 
+    public function GetListPorPuesto($buscar)
+    {
+
+        $candidatos = array();
+
+        $db = $this->context->conectar();
+
+        $stmt = "SELECT candidatos.Nombre,candidatos.Apellido,candidatos.Foto,partidos.Nombre as Partido, partidos.Logo_Partido  FROM candidatos INNER JOIN puesto_electivo ON candidatos.Puesto =
+        puesto_electivo.idPuesto_Electivo INNER JOIN partidos ON candidatos.Partido = partidos.idPartidos WHERE candidatos.Estado<>'Inactivo' AND puesto_electivo.Nombre = '$buscar' ";
+
+        $result = mysqli_query($db, $stmt);
+
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $stmt->close();
+
+    }
+
 }

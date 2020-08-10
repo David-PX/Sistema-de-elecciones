@@ -72,10 +72,8 @@ $utilities = new Utilities();
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
+
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>
@@ -159,8 +157,8 @@ $utilities = new Utilities();
 
                       <td class="align-middle"><span class="badge badge-primary text-success"></span><?php echo $list->Estado; ?></td>
                       <td class="align-middle">
-                          <a href="../servicios/borrar.php?id=<?php echo $list->IdPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editPartido.php?id=<?php echo $list->IdPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->idPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editPartido.php?id=<?php echo $list->idPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
         <?php endforeach;?>

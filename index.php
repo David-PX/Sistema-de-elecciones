@@ -1,4 +1,23 @@
+<?php
 
+require_once "Datos/MetodoSql.php";
+
+if (isset($_POST['cedula'])) {
+    $m = new MetodoSql();
+    $obj = $m->buscarCedula($_POST['cedula']);
+
+    if ($obj == true && $obj[0]['Estado'] != 'Inactivo') {
+        header('Location: vistaElector/menuPrincipal.php');
+
+    } elseif ($obj == true && $obj[0]['Estado'] == 'Inactivo') {
+        echo "<div class='alert alert-danger'>Este usuario esta inactivo, no podra realizar el proceso de eleccion</div>";
+
+    } else {
+        echo "<div class='alert alert-danger'>Cedula no existe</div>";
+
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +41,7 @@
 <div class="col-md-3"></div>
 <div class="col-md-6">
 
-<form class="form-container border border-success border-2" method="post" action="ciudadanos/validarCiudadano.php">
+<form class="form-container border border-success border-2" method="post" action="index.php">
   <h3 class=" border-bottom border-success">Iniciar sesion</h3>
   <div class="form-group inputWithIcon">
     <label for="cedula">Cedula</label>

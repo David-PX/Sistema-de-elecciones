@@ -1,0 +1,35 @@
+body {
+  overflow: hidden;
+  font-family: 'Muli', sans-serif;
+  width: 100%;
+overflow-y: scroll;
+
+}
+body::-webkit-scrollbar{
+    width: 5px;
+}
+body::-webkit-scrollbar-thumb{
+    background:#ff9100;
+}
+
+.container-votos{
+    width: 80%;
+}
+
+button{
+    width:auto ;
+  height: 80%;
+  max-height: 80%;
+}
+button img{
+  width: 100%;
+  height: auto;
+}
+
+@supports(object-fit: cover){
+    button img{
+      height: 75%;
+      object-fit: cover;
+      object-position: center center;
+    }
+}

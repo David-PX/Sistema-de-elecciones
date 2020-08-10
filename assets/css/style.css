@@ -1,25 +1,3 @@
 body{
-    background: linear-gradient(800deg,#29b342,#56d295);
-}
-h1{
-    color: rgb(204, 53, 53);
-}
-.column{
-    color: white;
-}
-
-#Form{
-   border-radius: 25px;
-   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-   background-color: white;
-   padding: 20px;
-}
-
-
-
-/*Estilos menu de administradores*/
-.menuAdmin{
-    background-color: white;
-   
-    
+    height: 100vh;
 }

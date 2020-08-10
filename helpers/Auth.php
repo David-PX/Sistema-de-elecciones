@@ -25,7 +25,7 @@ class Auth
         } else {
 
             $_SESSION['messageAuth'] = $mensaje;
-            header('Location: ' . $mensaje);
+            header('Location: ' . $redireccion);
             exit();
 
         }

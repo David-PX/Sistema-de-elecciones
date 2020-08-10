@@ -1,5 +1,5 @@
 <?php
-
+require_once 'eleccion.php';
 class EleccionServiceDatabase
 {
 
