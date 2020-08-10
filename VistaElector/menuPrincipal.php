@@ -1,24 +1,14 @@
 
 <?php
+
+require_once "../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/menuAdmin.php', true);
+
 require_once '../Datos/MetodoSql.php';
 require_once '../puestosElectivos/servicios/puestoElectivo.php';
 require_once '../puestosElectivos/servicios/PuestoServiceDatabase.php';
 require_once '../Datos/conexion.php';
-session_start();
-
-if (isset($_POST['voto'])) {
-    var_dump($_POST);
-    
-    $_SESSION['votoP'] = true;
-
-}
-if (isset($_POST['voto1'])) {
-    var_dump($_POST);
-   
-    $_SESSION['votoD'] = true;
-
-}
-var_dump($_SESSION);
 
 $servicePuesto = new PuestoServiceDatabase();
 

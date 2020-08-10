@@ -1,4 +1,7 @@
 <?php
+require_once "../helpers/Auth.php";
+
+$auth = new Auth('admin', '../admin/menuAdmin.php', true);
 
 include_once "../../candidatos/servicios/candidato.php";
 include_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
