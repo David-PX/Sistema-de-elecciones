@@ -76,11 +76,8 @@ $utilities = new Utilities();
                  Inicio
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Mi perfil</a>
-                  <a class="dropdown-item" href="#">Suscripciones</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Cerrar sesión</a>
-                </div>
+
+                  <a class="dropdown-item" href="../../admin/logout.php">Cerrar sesión</a>
               </li>
             </ul>
           </div>

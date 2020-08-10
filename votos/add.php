@@ -1,7 +1,7 @@
 <?php
 
-require_once('votos.php');
-require_once('VotoServiceDatabase.php');
+require_once 'votos.php';
+require_once 'VotoServiceDatabase.php';
 
 var_dump($_GET);
 
@@ -14,32 +14,19 @@ if (isset($_GET['puesto']) && isset($_GET['partido']) && isset($_GET['voto']) &&
 
     $service->Add($voto);
     //echo "entro aqui";
-    header('Location: ../VistaElector/menuPrincipal.php');
+
+    session_start();
+
+    if (isset($_SESSION['desactivar'])) {
+        $_SESSION['desactivar'] = $_SESSION['desactivar'];
+    } else {
+        $_SESSION['desactivar'] = array();
+    }
+
+    $desactivar = $_SESSION['desactivar'];
+    array_push($desactivar, $_GET['puesto']);
+
+    $_SESSION['desactivar'] = $desactivar;
+
+    header('Location: ../VistaElector/menuPrincipal.php?voto=1');
 }
-
-
-
-/**
- * 
- * <?php
-require_once 'CandidatoServiceDatabase.php';
-require_once 'candidato.php';
-require_once '../../helpers/Utilities.php';
-
-if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['partido']) && isset($_POST['puesto'])) {
-
-    $service = new CandidatoServiceDatabase();
-    $candidato = new Candidato();
-    $activo = $utilities->getActive();
-    $candidato->InicializarDatos(0, $_POST['nombre'], $_POST['apellido'], $_POST['partido'], $_POST['puesto'], null, $activo);
-
-    $service->Add($candidato);
-    header('Location: ../vistas/addCandidato.php');
-}
-
- */
-
-?>
-
-
-

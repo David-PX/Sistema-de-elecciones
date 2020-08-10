@@ -37,7 +37,7 @@ if (isset($_POST['usuario']) && isset($_POST['contraseña'])) {
 <title>Iniciando sesion como administrador.</title>
 </head>
 <body>
-
+<a href="../index.php " class="btn ">Volver al inicio de sesion</a>
 <div class="container  fadeInDown">
 
 <div class="row">

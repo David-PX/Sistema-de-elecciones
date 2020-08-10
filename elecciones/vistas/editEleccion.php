@@ -1,7 +1,7 @@
 <?php
 
-require_once "../helpers/Auth.php";
-
+require_once "../../helpers/Auth.php";
+require_once "../../Datos/conexion.php";
 $auth = new Auth('admin', '../admin/ingresarAdmin.php');
 
 require_once '../servicios/EleccioneServiceDataBase.php';

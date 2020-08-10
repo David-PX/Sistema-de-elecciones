@@ -157,8 +157,8 @@ $utilities = new Utilities();
 
                       <td class="align-middle"><span class="badge badge-primary text-success"></span><?php echo $list->Estado; ?></td>
                       <td class="align-middle">
-                          <a href="../servicios/borrar.php?id=<?php echo $list->IdPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
-                         <a href="editPartido.php?id=<?php echo $list->IdPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
+                          <a href="../servicios/borrar.php?id=<?php echo $list->idPartidos; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
+                         <a href="editPartido.php?id=<?php echo $list->idPartidos; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
 
                     </tr>
         <?php endforeach;?>

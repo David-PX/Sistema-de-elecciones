@@ -4,6 +4,21 @@ require_once '../Datos/MetodoSql.php';
 require_once '../puestosElectivos/servicios/puestoElectivo.php';
 require_once '../puestosElectivos/servicios/PuestoServiceDatabase.php';
 require_once '../Datos/conexion.php';
+session_start();
+
+if (isset($_POST['voto'])) {
+    var_dump($_POST);
+    
+    $_SESSION['votoP'] = true;
+
+}
+if (isset($_POST['voto1'])) {
+    var_dump($_POST);
+   
+    $_SESSION['votoD'] = true;
+
+}
+var_dump($_SESSION);
 
 $servicePuesto = new PuestoServiceDatabase();
 
@@ -60,33 +75,46 @@ $puestos = $servicePuesto->GetList();
 
 
   <div class="container pt-5">
-
-    <?php foreach ($puestos as $puesto): ?>
-
-        <?php if ($puesto->Nombre == "Presidente"): ?>
-
-            <a class="btn btn-primary" href="paginasVotaciones/votoPresidencial.php">Click aqui para votar por su Presidente </a> <br/><br/>
-
-        <?php elseif ($puesto->Nombre == "Alcalde"): ?>
-
-            <a class="btn btn-primary" href="paginasVotaciones/votoAlcalde.php">Click aqui para votar por su Alcade </a> <br/><br/>
-
-        <?php elseif ($puesto->Nombre == "Diputado"): ?>
-
-            <a class="btn btn-primary" href="paginasVotaciones/votoDiputado.php">Click aqui para votar por su Diputado </a> <br/><br/>
-
-        <?php elseif ($puesto->Nombre == "Senador"): ?>
-
-            <a class="btn btn-primary" href="paginasVotaciones/votoSenatorial.php">Click aqui para votar por su Senador </a> <br/><br/>
+<div class="row">
 
 
-        <?php endif;?>
 
-    <?php endforeach;?>
+
+              <?php foreach ($puestos as $puesto): ?>
+
+                  <?php if ($puesto->Nombre == "Presidente"): ?>
+          <div class="col-md-3 ">
+                      <a id="Presidente" class="btn btn-success btn-lg " href="paginasVotaciones/votoPresidencial.php">Click aqui para votar por su <strong>  Presidente! </strong></a> <br/><br/>
+          </div>
+                  <?php elseif ($puesto->Nombre == "Alcalde"): ?>
+          <div class="col-md-3 Alcalde">
+                      <a class="btn btn-warning btn-lg" href="paginasVotaciones/votoAlcalde.php">Click aqui para votar por su <strong> Alcade!</strong> </a> <br/><br/>
+          </div>
+                  <?php elseif ($puesto->Nombre == "Diputado"): ?>
+          <div class="col-md-3 Diputado">
+                      <a class="btn btn-danger btn-lg" href="paginasVotaciones/votoDiputado.php">Click aqui para votar por su <strong> Diputado! </strong></a> <br/><br/>
+          </div>
+                  <?php elseif ($puesto->Nombre == "Senador"): ?>
+          <div class="col-md-3 Senador">
+                      <a class="btn btn-primary btn-lg" href="paginasVotaciones/votoSenatorial.php">Click aqui para votar por <strong> su Senador! </strong></a> <br/><br/>
+          </div>
+
+                  <?php endif;?>
+
+              <?php endforeach;?>
+
+
+
+    </div>
+    <div class="text-center mt-5 ">
+    <button class="btn btn-info btn-lg">Finalizar Votacion! </button>
+    </div>
     </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="../assets\js\funcionesVista.js"></script>
 </body>
+
 </html>

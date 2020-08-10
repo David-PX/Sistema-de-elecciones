@@ -59,7 +59,7 @@ $hoy = date("Y-m-d");
 <div class=" mt-4 ">
     <?php for ($i = 0; $i < sizeof($Candidatos); $i++): ?>
 
-        <button class="btn candidato m-2" id="<?php echo "?puesto=p&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy; ?>" >
+        <button class="btn candidato m-2" id="<?php echo "?puesto=a&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy; ?>" >
                 <div class="card " style="width: 18rem; ">
         <img src="<?php echo $utilities->getSrcImage64($Candidatos[$i]['Logo_Partido']); ?>" class="card-img-top rounded "  width="10px">
         <div class="card-body">

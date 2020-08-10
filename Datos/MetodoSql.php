@@ -17,7 +17,7 @@ class MetodoSql
 
         $con = $this->conexion;
         $conexion = $con->conectar();
-        $sql = "CALL buscar_por_cedula('$cedula')";
+        $sql = "SELECT * FROM ciudadanos WHERE Cedula = '$cedula'";
         $result = mysqli_query($conexion, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
 

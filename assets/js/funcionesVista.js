@@ -1,5 +1,6 @@
   $(document).ready(function () {
     
+    
     $(".candidato").click(function(){
       
         $(".candidato").removeClass("btn-outline-success");
@@ -21,6 +22,10 @@
           //  alert(id);
 
     } );
+
+ 
+
+   
 
 
   
