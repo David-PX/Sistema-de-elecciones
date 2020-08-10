@@ -4,10 +4,10 @@ class Conexion
 {
 
     public $con = null;
-    private $server = 'localhost';
+    private $server = '127.0.0.1';
     private $user = 'root';
-    private $password = "";
-    private $nombreBD = "elecciones";
+    private $password = '';
+    private $nombreBD = 'elecciones';
 
     public function conectar()
     {
