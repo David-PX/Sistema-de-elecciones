@@ -1,7 +1,7 @@
 <?php
-require_once "../helpers/Auth.php";
+require_once "../../helpers/Auth.php";
 
-$auth = new Auth('admin', '../admin/menuAdmin.php', true);
+$auth = new Auth('admin', '../../admin/menuAdmin.php', true);
 
 include_once "../../candidatos/servicios/candidato.php";
 include_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
@@ -9,6 +9,12 @@ include_once "../../helpers/Utilities.php";
 
 $serviceCandidato = new CandidatoServiceDatabase();
 $utilities = new Utilities();
+
+$idCasilla = null;
+
+if (isset($_GET['id'])) {
+    $idCasilla = $_GET['id'];
+}
 
 $Candidatos = $serviceCandidato->GetListPorPuesto("Alcalde");
 
@@ -62,7 +68,7 @@ $hoy = date("Y-m-d");
 <div class=" mt-4 ">
     <?php for ($i = 0; $i < sizeof($Candidatos); $i++): ?>
 
-        <button class="btn candidato m-2" id="<?php echo "?puesto=a&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy; ?>" >
+        <button class="btn candidato m-2" id="<?php echo "?puesto=Alcalde&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy . "&nombre=" . $Candidatos[$i]['Nombre']; ?>" >
                 <div class="card " style="width: 18rem; ">
         <img src="<?php echo $utilities->getSrcImage64($Candidatos[$i]['Logo_Partido']); ?>" class="card-img-top rounded "  width="10px">
         <div class="card-body">
@@ -76,7 +82,7 @@ $hoy = date("Y-m-d");
 
     <?php endfor;?>
 
-    <button class="btn candidato  " id=" ?puesto=p&partido=ninguno&voto=1&fecha=<?php echo $hoy; ?>" >
+    <button class="btn candidato" id="?puesto=Alcalde&partido=ninguno&voto=1&fecha=<?php echo $hoy . "&nombre=ninguno"; ?>" >
                 <div class="card" style="width: 18rem; ">
 
         <div class="card-body">
@@ -93,7 +99,9 @@ $hoy = date("Y-m-d");
 
 </div>
 <div class="container text-center">
-<a href="#" class=" btn btn-success btn-block disabled text-center  " id="voto"  >Votar</a>
+  <form action="../menuPrincipal.php" method="post">
+<a href="#" class=" btn btn-success btn-block disabled text-center" id="voto" name="votoP" value="<?=$idCasilla;?>">Votar</a>
+</form>
 </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

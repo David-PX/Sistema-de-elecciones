@@ -18,7 +18,7 @@ class AdminService
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare('SELECT * FROM administradores WHERE usuario=? AND password=?');
+        $stmt = $db->prepare('SELECT * FROM administradores WHERE usuario=? AND contraseña=?');
         $stmt->bind_param('ss', $username, $password);
 
         $stmt->execute();

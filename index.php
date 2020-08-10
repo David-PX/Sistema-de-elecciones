@@ -8,8 +8,10 @@ if (isset($_POST['cedula'])) {
     $eleccion = $m->buscarEleccion();
 
     if ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] != 'Inactivo') {
-
+        session_start();
+        $_SESSION['usuario'] = $obj[0];
         header('Location: vistaElector/menuPrincipal.php');
+        exit();
 
     } elseif ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] == 'Inactivo') {
         echo "<div class='alert alert-danger'>No hay ninguna eleccion activa</div>";
@@ -25,7 +27,7 @@ if (isset($_POST['cedula'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head></head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

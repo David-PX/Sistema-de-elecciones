@@ -2,15 +2,39 @@
 
 require_once 'votos.php';
 require_once 'VotoServiceDatabase.php';
-
+session_start();
 var_dump($_GET);
+var_dump($_SESSION);
 
-if (isset($_GET['puesto']) && isset($_GET['partido']) && isset($_GET['voto']) && isset($_GET['fecha'])) {
+if (isset($_GET['puesto'])) {
+
+    if (isset($_SESSION['votaciones']) && !empty($_SESSION['votaciones'])) {
+
+        $votaciones = $_SESSION['votaciones'];
+
+        array_push($votaciones, $_GET['puesto']);
+
+        $_SESSION['votaciones'] = $votaciones;
+
+    } else {
+
+        $_SESSION['votaciones'] = array();
+
+        $votaciones = $_SESSION['votaciones'];
+
+        array_push($votaciones, $_GET['puesto']);
+
+        $_SESSION['votaciones'] = $votaciones;
+
+    }
+}
+
+if (isset($_GET['puesto']) && isset($_GET['partido']) && isset($_GET['fecha'])) {
 
     $service = new VotoServiceDatabase();
     $voto = new Votos();
     //$activo = $utilities->getActive();
-    $voto->InicializarDatos(0, $_GET['puesto'], $_GET['partido'], $_GET['voto'], $_GET['fecha']);
+    $voto->InicializarDatos(0, $_SESSION['usuario']['Cedula'], $_GET['nombre'], $_GET['puesto'], $_GET['partido'], $_GET['voto'], $_GET['fecha']);
 
     $service->Add($voto);
     //echo "entro aqui";
@@ -28,5 +52,5 @@ if (isset($_GET['puesto']) && isset($_GET['partido']) && isset($_GET['voto']) &&
 
     $_SESSION['desactivar'] = $desactivar;
 
-    header('Location: ../VistaElector/menuPrincipal.php?voto=1');
+    header('Location: ../VistaElector/menuPrincipal.php');
 }

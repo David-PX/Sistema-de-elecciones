@@ -14,7 +14,17 @@ $servicePuesto = new PuestoServiceDatabase();
 
 $puestos = $servicePuesto->GetList();
 
+var_dump($_SESSION['usuario']['Nombre']);
+
 //var_dump($puestos);
+$votaciones = array();
+
+if (isset($_SESSION['votaciones'])) {
+
+    $votaciones = $_SESSION['votaciones'];
+    var_dump($_SESSION);
+
+}
 
 ?>
 
@@ -68,25 +78,23 @@ $puestos = $servicePuesto->GetList();
 <div class="row">
 
 
-
-
               <?php foreach ($puestos as $puesto): ?>
 
-                  <?php if ($puesto->Nombre == "Presidente"): ?>
+                  <?php if ($puesto->Nombre == "Presidente" && !in_array($puesto->Nombre, $votaciones)): ?>
           <div class="col-md-3 ">
-                      <a id="Presidente" class="btn btn-success btn-lg " href="paginasVotaciones/votoPresidencial.php">Click aqui para votar por su <strong>  Presidente! </strong></a> <br/><br/>
+                      <a id="Presidente"  class="btn btn-success btn-lg  " href="paginasVotaciones/votoPresidencial.php?id=<?=$puesto->idPuesto_Electivo;?>">Click aqui para votar por su <strong>  Presidente! </strong></a> <br/><br/>
           </div>
-                  <?php elseif ($puesto->Nombre == "Alcalde"): ?>
+                  <?php elseif ($puesto->Nombre == "Alcalde" && !in_array($puesto->Nombre, $votaciones)): ?>
           <div class="col-md-3 Alcalde">
-                      <a class="btn btn-warning btn-lg" href="paginasVotaciones/votoAlcalde.php">Click aqui para votar por su <strong> Alcade!</strong> </a> <br/><br/>
+                      <a class="btn btn-warning btn-lg" href="paginasVotaciones/votoAlcalde.php?id=<?=$puesto->idPuesto_Electivo;?>">Click aqui para votar por su <strong> Alcade!</strong> </a> <br/><br/>
           </div>
-                  <?php elseif ($puesto->Nombre == "Diputado"): ?>
+                  <?php elseif ($puesto->Nombre == "Diputado" && !in_array($puesto->Nombre, $votaciones)): ?>
           <div class="col-md-3 Diputado">
-                      <a class="btn btn-danger btn-lg" href="paginasVotaciones/votoDiputado.php">Click aqui para votar por su <strong> Diputado! </strong></a> <br/><br/>
+                      <a class="btn btn-danger btn-lg" href="paginasVotaciones/votoDiputado.php?id=<?=$puesto->idPuesto_Electivo;?>">Click aqui para votar por su <strong> Diputado! </strong></a> <br/><br/>
           </div>
-                  <?php elseif ($puesto->Nombre == "Senador"): ?>
+                  <?php elseif ($puesto->Nombre == "Senador" && !in_array($puesto->Nombre, $votaciones)): ?>
           <div class="col-md-3 Senador">
-                      <a class="btn btn-primary btn-lg" href="paginasVotaciones/votoSenatorial.php">Click aqui para votar por <strong> su Senador! </strong></a> <br/><br/>
+                      <a class="btn btn-primary btn-lg" href="paginasVotaciones/votoSenatorial.php?id=<?=$puesto->idPuesto_Electivo;?>">Click aqui para votar por <strong> su Senador! </strong></a> <br/><br/>
           </div>
 
                   <?php endif;?>
@@ -94,10 +102,17 @@ $puestos = $servicePuesto->GetList();
               <?php endforeach;?>
 
 
+              <?php if (count($votaciones) == count($puestos)): ?>
+
+              <h1>Usted Ya Ha Realizado Todos los Votos, Dele A Finalizar Palomo</h1>
+
+              <?php endif;?>
+
+
 
     </div>
     <div class="text-center mt-5 ">
-    <button class="btn btn-info btn-lg">Finalizar Votacion! </button>
+    <a href="../votos/procesarVoto.php" class="btn btn-info btn-lg">Finalizar Votacion! </a>
     </div>
     </div>
 

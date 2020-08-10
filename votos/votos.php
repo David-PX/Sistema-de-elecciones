@@ -1,34 +1,35 @@
-<?php 
-
+<?php
 
 /*
 `idRegistro`  ,
- `puestoElectivo`  ,
-  `partido` 
-   , `votos` 
-    , `fechaCelebracion`  , 
-*/
-class Votos{
+`puestoElectivo`  ,
+`partido`
+, `votos`
+, `fechaCelebracion`  ,
+ */
+class Votos
+{
 
- public $idRegistro;
- public $puestoElectivo;
- public $partido;
- public $votos;
- public $fechaCelebracion;
+    public $idRegistro;
+    public $cedulaVotante;
+    public $nombreCandidato;
+    public $puestoElectivo;
 
- public function InicializarDatos($idRegistro, $puestoElectivo, $partido, $votos, $fechaCelebracion)
- {
+    public $partido;
+    public $votos;
+    public $fechaCelebracion;
 
-     $this->idRegistro = $idRegistro;
-     $this->puestoElectivo = $puestoElectivo;
-     $this->partido = $partido;
-     $this->votos = $votos;
-     $this->fechaCelebracion = $fechaCelebracion;
+    public function InicializarDatos($idRegistro, $cedulaVotante, $nombreCandidato, $puestoElectivo, $partido, $votos, $fechaCelebracion)
+    {
 
- }
+        $this->idRegistro = $idRegistro;
+        $this->cedulaVotante = $cedulaVotante;
+        $this->nombreCandidato = $nombreCandidato;
+        $this->puestoElectivo = $puestoElectivo;
+        $this->partido = $partido;
+        $this->votos = $votos;
+        $this->fechaCelebracion = $fechaCelebracion;
 
-
-
+    }
 
 }
-?>
