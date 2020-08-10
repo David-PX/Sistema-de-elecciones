@@ -1,7 +1,7 @@
 <?php
-require_once "../helpers/Auth.php";
+require_once "../../helpers/Auth.php";
 
-$auth = new Auth('admin', '../admin/menuAdmin.php', true);
+$auth = new Auth('admin', '../../admin/menuAdmin.php', true);
 
 include_once "../../candidatos/servicios/candidato.php";
 include_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
@@ -23,10 +23,10 @@ $hoy = date("Y-m-d");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votacion Presidenial</title>
 
-    <link rel="stylesheet" href="../../assets/css/votaciones.css" type="text/css">
+
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+<link rel="stylesheet" href="../../assets/css/votaciones.css" type="text/css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-success">
@@ -62,7 +62,7 @@ $hoy = date("Y-m-d");
 <div class="container-votos mt-4 ">
     <?php for ($i = 0; $i < sizeof($Candidatos); $i++): ?>
 
-        <button class="btn candidato m-2" id="<?php echo "?puesto=s&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy; ?>" >
+        <button class="btn candidato m-2" id="<?php echo "?puesto=Senador&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy . "&nombre=" . $Candidatos[$i]['Nombre']; ?>" >
                 <div class="card " style="width: 18rem; ">
         <img src="<?php echo $utilities->getSrcImage64($Candidatos[$i]['Logo_Partido']); ?>" class="card-img-top rounded "  width="10px">
         <div class="card-body">
@@ -76,7 +76,7 @@ $hoy = date("Y-m-d");
 
     <?php endfor;?>
 
-    <button class="btn candidato  " id=" ?puesto=p&partido=ninguno&voto=1&fecha=<?php echo $hoy; ?>" >
+    <button class="btn candidato  " id=" ?puesto=Senador&partido=ninguno&voto=1&fecha=<?php echo $hoy . "&nombre=ninguno"; ?>" >
                 <div class="card" style="width: 18rem; ">
 
         <div class="card-body">
@@ -93,7 +93,7 @@ $hoy = date("Y-m-d");
 
 </div>
 <div class="container text-center">
-<a href="#" class=" btn btn-success btn-block disabled text-center  " id="voto"  >Votar</a>
+<a href="#" class=" btn btn-success btn-block disabled text-center" id="voto"  >Votar</a>
 </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

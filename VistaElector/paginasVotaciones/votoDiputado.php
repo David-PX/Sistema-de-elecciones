@@ -1,12 +1,12 @@
 <?php
-require_once "../helpers/Auth.php";
+require_once "../../helpers/Auth.php";
 
-$auth = new Auth('admin', '../admin/menuAdmin.php', true);
+$auth = new Auth('admin', '../../admin/menuAdmin.php', true);
 
 include_once "../../candidatos/servicios/candidato.php";
 include_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
 include_once "../../helpers/Utilities.php";
-session_start();
+
 if (isset($_SESSION['votoD'])) {
     header('Location: ../menuPrincipal.php');
 }
@@ -66,7 +66,7 @@ $hoy = date("Y-m-d");
 <div class=" mt-4 ">
     <?php for ($i = 0; $i < sizeof($Candidatos); $i++): ?>
 
-        <button class="btn candidato m-2" id="<?php echo "?puesto=d&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy; ?>" >
+        <button class="btn candidato m-2" id="<?php echo "?puesto=Diputado&partido=" . $Candidatos[$i]['Partido'] . "&voto=1&fecha=" . $hoy . "&nombre=" . $Candidatos[$i]['Nombre']; ?>" >
                 <div class="card " style="width: 18rem; ">
         <img src="<?php echo $utilities->getSrcImage64($Candidatos[$i]['Logo_Partido']); ?>" class="card-img-top rounded "  width="10px">
         <div class="card-body">
@@ -80,7 +80,7 @@ $hoy = date("Y-m-d");
 
     <?php endfor;?>
 
-    <button class="btn candidato  " id=" ?puesto=p&partido=ninguno&voto=1&fecha=<?php echo $hoy; ?>" >
+    <button class="btn candidato  " id="?puesto=Diputado&partido=ninguno&voto=1&fecha=<?php echo $hoy . "&nombre=ninguno"; ?>" >
                 <div class="card" style="width: 18rem; ">
 
         <div class="card-body">
@@ -98,7 +98,7 @@ $hoy = date("Y-m-d");
 </div>
 <div class="container text-center">
 <form action="../menuPrincipal.php" method="post">
-<button href="#" class=" btn btn-success btn-block disabled text-center" id="voto" name="voto1" >Votar</button>
+<a href="#" class=" btn btn-success btn-block disabled text-center" id="voto" name="voto1" >Votar</a>
 </form>
 </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

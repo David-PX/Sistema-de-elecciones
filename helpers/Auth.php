@@ -32,7 +32,7 @@ class Auth
 
         } else {
 
-            if (isset($_SESSION[$sessionName]) || !empty($sessionName)) {
+            if (isset($_SESSION[$sessionName]) || !empty($_SESSION[$sessionName])) {
 
                 $_SESSION['messageAuth'] = $mensaje;
                 header('Location: ' . $redireccion);
