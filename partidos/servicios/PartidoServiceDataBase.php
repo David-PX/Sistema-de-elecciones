@@ -115,7 +115,7 @@ class PartidoServiceDataBase
     {
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("UPDATE partidos SET Estado = 'Inactivo' WHERE idPartidos=?");
+        $stmt = $db->prepare("UPDATE candidatos INNER JOIN partidos ON candidatos.Partido = partidos.idPartidos SET candidatos.Estado = 'Inactivo' , partidos.Estado = 'Inactivo' WHERE partidos.idPartidos =  $id");
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $stmt->close();

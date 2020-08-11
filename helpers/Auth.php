@@ -10,7 +10,9 @@ class Auth
     public function __construct($sessionName, $redireccion = '../index.php', $ifExistSession = false, $mensaje = 'Debe iniciar sesion, ve que ute es palomo')
     {
 
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
 
         if ($ifExistSession == false) {
             if (isset($_SESSION[$sessionName])) {

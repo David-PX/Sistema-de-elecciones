@@ -13,42 +13,17 @@ class VotoServiceDatabase
 
     //Funciones
     //Obtiene todos los Candidato en la bd
-    public function GetList($puesto, $partido, $fecha)
+    public function GetList()
     {
 
-        $Votos = array();
+        $con = $this->context;
+        $context = $con->conectar();
+        $sql = "SELECT * FROM registrovotos";
+        $result = mysqli_query($context, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        $db = $this->context->conectar();
+        $con->cerrarConexion();
 
-        foreach ($partido as $valor) {
-            # code...
-            $stmt = $db->prepare("SELECT SUM(votos),partido FROM registrovotos WHERE puestoElectivo = ? and partido = ? and fechaCelebracion = ?  ");
-            $stmt->bind_param('sss', $puesto, $valor, $fecha);
-            $stmt->execute();
-
-            $result = $stmt->get_result();
-
-            array_push($Votos, $result);
-            /*if ($result->num_rows !== 0) {
-
-        while ($row = $result->fetch_object()) {
-
-        $Voto = new Votos();
-
-        $Voto->InicializarDatos($row->idPartidos, $row->Nombre, $row->Descripcion, $row->Logo_Partido,$row->Estado);
-
-        array_push($Votos, $Voto);
-
-        }
-
-        }
-        } */
-
-        }
-
-        $stmt->close();
-
-        return $result;
     }
 
     //Agrega un puestoElectivo a la lista de puestoElectivo
@@ -72,6 +47,44 @@ class VotoServiceDatabase
         $con = $this->context;
         $context = $con->conectar();
         $sql = "SELECT * FROM registrovotos WHERE cedulaVotante = '$cedula'";
+        $result = mysqli_query($context, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $con->cerrarConexion();
+
+    }
+    public function getCountVotos()
+    {
+
+        $con = $this->context;
+        $context = $con->conectar();
+        $sql = "SELECT nombreCandidato,puestoElectivo,partido,SUM(votos) AS votos FROM registrovotos GROUP BY puestoElectivo, partido";
+        $result = mysqli_query($context, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $con->cerrarConexion();
+
+    }
+
+    public function addResult($datos)
+    {
+
+        $db = $this->context->conectar();
+
+        $stmt = $db->prepare('INSERT INTO resultados (idElecciones , nombreCandidato,puesto ,partido,totalVotos) VALUES (?,?,?,?,?)');
+
+        $stmt->bind_param('isssi', $datos[0], $datos[1], $datos[2], $datos[3], $datos[4]);
+
+        $stmt->execute();
+        $stmt->close();
+
+    }
+    public function getReport($id)
+    {
+
+        $con = $this->context;
+        $context = $con->conectar();
+        $sql = "SELECT * FROM resultados INNER JOIN elecciones ON resultados.idElecciones = elecciones.idElecciones WHERE elecciones.idElecciones = $id";
         $result = mysqli_query($context, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
 

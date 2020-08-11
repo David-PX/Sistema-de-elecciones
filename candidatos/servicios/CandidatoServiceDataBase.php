@@ -205,7 +205,6 @@ class CandidatoServiceDatabase
 
         return $candidato;
 
-
-
+    }
 
 }

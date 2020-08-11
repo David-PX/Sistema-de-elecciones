@@ -1,7 +1,7 @@
 <?php
 require_once "../../helpers/Auth.php";
 
-$auth = new Auth('admin', '../admin/ingresarAdmin.php');
+$auth = new Auth('admin', '../../admin/ingresarAdmin.php');
 
 require_once '../../Datos/conexion.php';
 require_once '../servicios/eleccion.php';
@@ -105,7 +105,13 @@ $lista = $service->GetList();
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Crear Elecciones</button>
+   <?php if ($lista[0]->Estado == 'Activo'): ?>
+  <button type="submit" disabled class="btn btn-success">Crear Elecciones</button>
+   <?php else: ?>
+<button type="submit"  class="btn btn-success">Crear Elecciones</button>
+
+
+   <?php endif;?>
 </form>
   </div>
 </div>
@@ -139,7 +145,7 @@ $lista = $service->GetList();
                       <td class="align-middle">
                           <a href="../servicios/borrar.php?id=<?php echo $list->idElecciones; ?>"> <i class="fas fa-trash-alt text-danger"></i></a>
                          <a href="editEleccion.php?id=<?php echo $list->idElecciones; ?>">  <i class="fas fa-edit text-secondary"></i>   </td></a>
-
+ <td class="align-middle"><a href="verElecciones.php?id=<?php echo $list->idElecciones; ?>" class="badge badge-info text-white"> Ver reporte </a></td>
 
                     </tr>
                <?php endforeach;?>
