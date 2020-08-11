@@ -1,8 +1,13 @@
 <?php
 require_once "PartidoServiceDatabase.php";
+$service = new PartidoServiceDatabase();
 
-$id = $_GET['id'];
-var_dump($id);
-$obj = new PartidoServiceDatabase();
-$obj->Delete($id);
-header('Location: ../vistas/addPartido.php');
+if (isset($_GET['id'])) {
+
+    $id = $_GET['id'];
+
+    $service->Delete($id);
+
+    header('Location: ../vistas/addPartido.php');
+
+}

@@ -1,5 +1,6 @@
 <?php
 require_once "../../helpers/Auth.php";
+require_once "../../Datos/conexion.php";
 
 $auth = new Auth('admin', '../../admin/menuAdmin.php', true);
 
@@ -53,7 +54,7 @@ $hoy = date("Y-m-d");
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                  <a class="dropdown-item" href="../index.php">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../logoutCiudadano.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

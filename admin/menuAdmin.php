@@ -1,7 +1,13 @@
 <?php
 require_once "../helpers/Auth.php";
-
 $auth = new Auth('admin', '../admin/ingresarAdmin.php');
+
+require_once "../Datos/conexion.php";
+require_once "../elecciones/servicios/EleccioneServiceDataBase.php";
+
+$eleccion = new EleccionServiceDatabase();
+$lista = $eleccion->GetList();
+var_dump($lista[0]->Estado);
 
 ?>
 
@@ -79,9 +85,13 @@ $auth = new Auth('admin', '../admin/ingresarAdmin.php');
 
   <div class="card-body">
     <h5 class="card-title text-success">Elecciones activas:</h5>
-    <p class="card-text">Elecciones 2020</p>
-    <p>Fecha de inicio: <?php echo date('d-m-Y'); ?> </p>
-    <a href="#" class="btn btn-success">Terminar Elecciones</a>
+    <p class="card-text"> <?php echo $lista[0]->Nombre; ?></p>
+    <p>Fecha de inicio: <?php echo $lista[0]->Fecha_realizacion; ?> </p>
+    <?php if ($lista[0]->Estado == 'inactivo'): ?>
+    <a href="../elecciones/servicios/terminarEleccion.php"  class="btn btn-success disabled">Terminar Elecciones</a>
+    <?php else: ?>
+ <a href="../elecciones/servicios/terminarEleccion.php"  class="btn btn-success ">Terminar Elecciones</a>
+    <?php endif;?>
   </div>
 </div>
                   </div>

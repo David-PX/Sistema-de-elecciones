@@ -1,11 +1,12 @@
 <?php
 require_once "../../helpers/Auth.php";
+require_once "../../Datos/conexion.php";
 
 $auth = new Auth('admin', '../../admin/menuAdmin.php', true);
 
-include_once "../../candidatos/servicios/candidato.php";
-include_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
-include_once "../../helpers/Utilities.php";
+require_once "../../candidatos/servicios/candidato.php";
+require_once "../../candidatos/servicios/CandidatoServiceDataBase.php";
+require_once "../../helpers/Utilities.php";
 
 $serviceCandidato = new CandidatoServiceDatabase();
 $utilities = new Utilities();

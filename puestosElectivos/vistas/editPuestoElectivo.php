@@ -1,4 +1,7 @@
 <?php
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../../admin/ingresarAdmin.php');
 
 require_once '../servicios/puestoElectivo.php';
 require_once '../../helpers/Utilities.php';
@@ -9,7 +12,6 @@ $id = $_GET['id'];
 
 $service = new PuestoServiceDatabase();
 $lista = $service->GetById($id);
-var_dump($lista);
 
 ?>
 <!DOCTYPE html>
@@ -95,7 +97,7 @@ var_dump($lista);
 
     <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
+      <input type="text"disabled class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
     </div>
     <div class="form-group col-md-8">
       <label for="exampleFormControlTextarea1">Descripcion</label>

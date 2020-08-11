@@ -1,17 +1,25 @@
 <?php
 
 require_once "Datos/MetodoSql.php";
+require_once 'votos/VotoServiceDatabase.php';
+require_once "Datos/conexion.php";
 
 if (isset($_POST['cedula'])) {
     $m = new MetodoSql();
+    $voto = new VotoServiceDatabase();
+    $v = $voto->getVotos($_POST['cedula']);
+
     $obj = $m->buscarCedula($_POST['cedula']);
     $eleccion = $m->buscarEleccion();
 
-    if ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] != 'Inactivo') {
+    if ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] != 'Inactivo' && empty($v[0]['cedulaVotante'])) {
         session_start();
         $_SESSION['usuario'] = $obj[0];
         header('Location: vistaElector/menuPrincipal.php');
         exit();
+
+    } elseif ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] != 'Inactivo' && isset($v[0]['cedulaVotante'])) {
+        echo "<div class='alert alert-danger'>Ya votaste ve que usted es palomo </div>";
 
     } elseif ($obj == true && $obj[0]['Estado'] != 'Inactivo' && $eleccion[0]['Estado'] == 'Inactivo') {
         echo "<div class='alert alert-danger'>No hay ninguna eleccion activa</div>";
@@ -19,7 +27,7 @@ if (isset($_POST['cedula'])) {
     } elseif ($obj == true && $obj[0]['Estado'] == 'Inactivo') {
         echo "<div class='alert alert-danger'>Este usuario esta inactivo, no podra realizar el proceso de eleccion</div>";
 
-    } else {
+    } elseif ($obj == false) {
         echo "<div class='alert alert-danger'>Cedula no existe</div>";
 
     }

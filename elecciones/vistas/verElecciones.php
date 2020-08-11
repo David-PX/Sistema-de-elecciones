@@ -3,19 +3,21 @@ require_once "../../helpers/Auth.php";
 
 $auth = new Auth('admin', '../../admin/ingresarAdmin.php');
 
-require_once '../servicios/PartidoServiceDataBase.php';
+require_once '../../Datos/conexion.php';
+require_once '../servicios/eleccion.php';
 require_once '../../helpers/Utilities.php';
-
-$utilities = new Utilities();
-$service = new PartidoServiceDataBase();
+require_once '../servicios/EleccioneServiceDataBase.php';
+require_once '../../votos/VotoServiceDatabase.php';
 
 $id = $_GET['id'];
 
-$lista = $service->GetById($id);
+$service = new VotoServiceDatabase();
+$lista = $service->getReport($id);
 
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,14 +26,9 @@ $lista = $service->GetById($id);
     <script src="https://kit.fontawesome.com/c805912686.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-
-
-
-<title>Inicio de sesion.</title>
+    <title>Elecciones</title>
 </head>
 <body>
-
-
 
 <div class="d-flex" id="content-wrapper">
 
@@ -41,7 +38,7 @@ $lista = $service->GetById($id);
         <h4 class="font-weight-bold mb-0 text-dark border-bottom border-success">Administracion Elecciones</h4>
       </div>
       <div class="menu list-group-flush">
-      <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
+       <a href="../../admin/menuAdmin.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-cog"></i> Administracion</a>
         <a href="../../elecciones/vistas/addElecciones.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-check-circle"></i> Elecciones</a>
         <a href="../../puestosElectivos/vistas/addPuestoElectivo.php" class="list-group-item list-group-item-action text-success bg-white p-3 border-0"><i class="fas fa-chair"></i> Puestos Electivos</a>
 
@@ -85,66 +82,55 @@ $lista = $service->GetById($id);
         </div>
       </nav>
 
-       <!---->
-      <div class="container-fluid pl-5 pt-4 pr-5">
-                    <div class="">
-                    <div class="card card-elec">
 
-  <div class="card-body">
-<form method="POST" action="../servicios/edit.php?id=<?php echo $id; ?>" enctype="multipart/form-data">
-  <div class="form-row">
-
-    <div class="form-group col-md-3">
-      <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
-    </div>
-    <div class="form-group col-md-3">
-      <label for="apellido">Descripcion</label>
-      <input type="text" class="form-control" id="apellido" name="descripcion" required value="<?php echo $lista->Descripcion; ?>">
-    </div>
-
-    <div class="form-group col-md-2 ">
-        <div id="preview" class="img-thumbnail border border-success rounded float-left " >
-            <img src="<?php echo $utilities->getSrcImage64($lista->Logo_Partido); ?>" alt="" srcset="" width="100px" >
-        </div>
-
-      </div>
-
-       <div class="form-group col-md-2 mt-4 mr-4">
+<!-- Tabla usuarios -->
+            <div class="col-xl-9 col-lg-12 ml-5 mt-3">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                        <th colspan="col"><small class="font-weight-bold">Nombre Eleccion<small></th>
+                          <th colspan="col"><small class="font-weight-bold">Fecha de realizacion<small></th>
+                      <th colspan="col"><small class="font-weight-bold">Candidato<small></th>
 
 
-    <input type="file" class="form-control custom-file-input" id="file" name="foto" value="<?php $lista->Logo_Partido;?>">
-    <label for="file" class="custom-file-label">foto</label>
-  </div>
+                       <th scope="col"><small class="font-weight-bold">Puesto Electivo<small></th>
 
-  </div>
+                         <th scope="col"><small class="font-weight-bold">Partido<small></th>
+                         <th scope="col"><small class="font-weight-bold">Votos<small></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+               <?php foreach ($lista as $list): ?>
+                    <tr class="shadow-sm border border-success rounded">
+ <td class="align-middle"><span class="d-block"> <?php echo $list['Nombre']; ?> </span></td>
+  <td class="align-middle"><span class="d-block"> <?php echo $list['Fecha_realizacion']; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list['nombreCandidato']; ?> </span></td>
+                      <td class="align-middle"><span class="d-block"> <?php echo $list['puesto']; ?> </span></td>
+                        <td class="align-middle"><span class="d-block"> <?php echo $list['partido']; ?> </span></td>
+<td class="align-middle"><span class="d-block"> <?php echo $list['totalVotos']; ?> </span></td>
+
+
+                      <td class="align-middle">
 
 
 
+                    </tr>
+               <?php endforeach;?>
 
-
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck" checked name="activo">
-      <label class="form-check-label" for="gridCheck" >
-        Activo
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-success">Guardar</button>
-</form>
-  </div>
-</div>
-                  </div>
-</div>
-<!---->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Fin tabla usarios -->
 
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="../../assets/js/app.js"></script>
+<script src="../assets/js/app.js"></script>
 <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

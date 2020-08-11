@@ -13,8 +13,9 @@ require_once '../Datos/conexion.php';
 $servicePuesto = new PuestoServiceDatabase();
 
 $puestos = $servicePuesto->GetList();
-
-var_dump($_SESSION['usuario']['Nombre']);
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../index');
+}
 
 //var_dump($puestos);
 $votaciones = array();
@@ -62,7 +63,7 @@ if (isset($_SESSION['votaciones'])) {
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                  <a class="dropdown-item" href="../index.php">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../ciudadanos/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>

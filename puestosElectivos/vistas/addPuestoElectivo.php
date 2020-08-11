@@ -1,9 +1,16 @@
 <?php
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../../admin/ingresarAdmin.php');
 
 require_once '../servicios/puestoElectivo.php';
 require_once '../../helpers/Utilities.php';
 require_once '../servicios/PuestoServiceDataBase.php';
 require_once '../../Datos/conexion.php';
+require_once '../../elecciones/servicios/EleccioneServiceDataBase.php';
+
+$elecciones = new EleccionServiceDatabase();
+$elec = $elecciones->GetList();
 
 $service = new PuestoServiceDatabase();
 $lista = $service->GetList();
@@ -81,6 +88,7 @@ $lista = $service->GetList();
       </nav>
 
        <!---->
+       <?php if ($elec[0]->Estado != 'inactivo'): ?>
       <div class="container-fluid pl-5 pt-4 pr-5">
                     <div class="">
                     <div class="card card-elec">
@@ -162,7 +170,12 @@ $lista = $service->GetList();
               </div>
             </div>
             <!-- Fin tabla usarios -->
+ <?php else: ?>
 
+
+<h1>Tienes que iniciar elecciones</h1>
+
+ <?php endif;?>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

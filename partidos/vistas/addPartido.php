@@ -1,8 +1,17 @@
 <?php
+
+require_once "../../helpers/Auth.php";
+
+$auth = new Auth('admin', '../../admin/ingresarAdmin.php');
+
 require_once '../servicios/PartidoServiceDatabase.php';
 require_once '../servicios/partido.php';
 
 require_once '../../helpers/Utilities.php';
+require_once '../../elecciones/servicios/EleccioneServiceDataBase.php';
+
+$elecciones = new EleccionServiceDatabase();
+$elec = $elecciones->GetList();
 
 $partido = new PartidoServiceDatabase();
 $lista = $partido->GetList();
@@ -80,7 +89,7 @@ $utilities = new Utilities();
           </div>
         </div>
       </nav>
-
+<?php if ($elec[0]->Estado != 'inactivo'): ?>
        <!---->
       <div class="container-fluid pl-5 pt-4 pr-5">
                     <div class="">
@@ -168,6 +177,13 @@ $utilities = new Utilities();
               </div>
             </div>
             <!-- Fin tabla usarios -->
+            <?php else: ?>
+
+
+<h1>Tienes que iniciar elecciones</h1>
+
+ <?php endif;?>
+
 
 
 

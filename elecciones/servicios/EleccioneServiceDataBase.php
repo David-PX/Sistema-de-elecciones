@@ -21,7 +21,7 @@ class EleccionServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("SELECT * FROM elecciones WHERE Estado <> 'inactivo' ");
+        $stmt = $db->prepare("SELECT * FROM elecciones ORDER BY Fecha_realizacion DESC ");
 
         $stmt->execute();
 
@@ -115,6 +115,10 @@ class EleccionServiceDatabase
 
         $stmt->execute();
         $stmt->close();
+
+    }
+    public function getLastId()
+    {
 
     }
 
