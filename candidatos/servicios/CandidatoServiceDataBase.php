@@ -177,4 +177,35 @@ class CandidatoServiceDatabase
 
     }
 
+    public function GetByPartido($id)
+    {
+        $db = $this->context->conectar();
+
+        $candidato = new Candidato();
+
+        $stmt = $db->prepare('SELECT * FROM candidatos WHERE partido = ?');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            return null;
+        } else {
+
+            while ($row = $result->fetch_object()) {
+
+                $candidato->InicializarDatos($row->idCandidatos, $row->Nombre, $row->Apellido, $row->Partido, $row->Puesto, $row->Foto, $row->Estado);
+
+            }
+
+        }
+
+        $stmt->close();
+
+        return $candidato;
+
+
+
+
 }

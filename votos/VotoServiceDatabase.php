@@ -1,5 +1,4 @@
 <?php
-include_once "../Datos/conexion.php";
 
 class VotoServiceDatabase
 {

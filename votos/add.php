@@ -2,6 +2,8 @@
 
 require_once 'votos.php';
 require_once 'VotoServiceDatabase.php';
+require_once "../Datos/conexion.php";
+
 session_start();
 var_dump($_GET);
 var_dump($_SESSION);
