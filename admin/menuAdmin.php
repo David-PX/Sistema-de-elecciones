@@ -3,11 +3,16 @@ require_once "../helpers/Auth.php";
 $auth = new Auth('admin', '../admin/ingresarAdmin.php');
 
 require_once "../Datos/conexion.php";
+require_once "../Datos/MetodoSql.php";
+
 require_once "../elecciones/servicios/EleccioneServiceDataBase.php";
 
 $eleccion = new EleccionServiceDatabase();
+$m = new MetodoSql();
+
+$ganadores = $m->getWinners();
+
 $lista = $eleccion->GetList();
-var_dump($lista[0]->Estado);
 
 ?>
 
@@ -48,7 +53,6 @@ var_dump($lista[0]->Estado);
 
     <!-- Page Content -->
 
-
     <div id="page-content-wrapper" class="w-100 bg-light-blue">
 
 
@@ -78,10 +82,12 @@ var_dump($lista[0]->Estado);
           </div>
         </div>
       </nav>
+<?php if (!empty($lista[0])): ?>
                   <!---->
                   <div class="container-fluid p-3">
                     <div class="">
                     <div class="card card-elec">
+
 
   <div class="card-body">
     <h5 class="card-title text-success">Elecciones activas:</h5>
@@ -103,6 +109,7 @@ var_dump($lista[0]->Estado);
 
           <!-- Highlights -->
           <div class="row">
+          <?php foreach ($ganadores as $winner): ?>
             <div class="col-xl-3 col-lg-6">
               <div class="card mb-5 shadow-sm border-0 shadow-hover">
                 <div class="card-body d-flex">
@@ -112,57 +119,15 @@ var_dump($lista[0]->Estado);
                     </div>
                   </div>
                   <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Presidente Ganador:</h6>
-                    <small class="text-muted">...</small>
+                    <h6 class="mb-0 text-success"> <?php echo $winner['puesto']; ?> Ganador:</h6>
+                    <small class="text-muted"> <?=$winner['nombreCandidato'];?> </small>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
 
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Alcalde ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
+          <?php endforeach;?>
 
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Senador ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-              <div class="card mb-5 shadow-sm border-0 shadow-hover">
-                <div class="card-body d-flex">
-                  <div>
-                    <div class="circle rounded-circle bg-success align-self-center d-flex mr-3">
-
-                    </div>
-                  </div>
-                  <div class="align-self-center">
-                    <h6 class="mb-0 text-success">Diputado ganador:</h6>
-                    <small class="text-muted">...</small>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- Fin highlights -->
 
@@ -209,8 +174,10 @@ var_dump($lista[0]->Estado);
     <!-- Fin Page Content -->
   </div>
   <!-- Fin wrapper -->
+          <?php else: ?>
+               <h1>Debe de empezar una eleccion</h1>
 
-
+          <?php endif;?>
 
 
 

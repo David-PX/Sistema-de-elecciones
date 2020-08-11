@@ -23,7 +23,7 @@ class CandidatoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("SELECT * FROM candidatos WHERE Estado<>'Inactivo'");
+        $stmt = $db->prepare("SELECT * FROM candidatos ORDER BY Estado");
 
         $stmt->execute();
 

@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
 
     $partido = $partidoService->GetById($id);
 
-    if (isset($_POST['nombre']) && isset($_POST['descripcion']) && isset($_POST['activo'])) {
+    if (isset($_POST['nombre']) && isset($_POST['descripcion'])) {
         $activo = $utilities->getActive();
 
         $image = (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) ? null : $partido->Logo_Partido;

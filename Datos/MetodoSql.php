@@ -66,5 +66,18 @@ class MetodoSql
         return $partidos;
 
     }
+    public function getWinners()
+    {
+
+        $con = $this->conexion;
+        $conexion = $con->conectar();
+        $sql = "SELECT puesto,nombreCandidato,MAX(totalVotos) as votos from resultados INNER JOIN elecciones ON resultados.idElecciones = elecciones.idElecciones GROUP BY resultados.puesto ";
+
+        $result = mysqli_query($conexion, $sql);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $con->cerrarConexion();
+
+    }
 
 }

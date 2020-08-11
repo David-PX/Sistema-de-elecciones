@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
 
     $ciudadanos = $ciudadano->GetById($id);
 
-    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['activo'])) {
+    if (isset($_POST['nombre']) && isset($_POST['apellido'])) {
         $activo = $utilities->getActive();
 
         $entidad->InicializarDatos($_POST['cedula'], $_POST['nombre'], $_POST['apellido'], $_POST['email'], $activo);

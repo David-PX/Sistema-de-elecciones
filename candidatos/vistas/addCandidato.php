@@ -9,6 +9,10 @@ require_once '../servicios/candidato.php';
 require_once '../../puestosElectivos/servicios/PuestoServiceDataBase.php';
 require_once '../../partidos/servicios/PartidoServiceDataBase.php';
 require_once '../../helpers/Utilities.php';
+require_once '../../elecciones/servicios/EleccioneServiceDataBase.php';
+
+$elecciones = new EleccionServiceDatabase();
+$elec = $elecciones->GetList();
 
 $candidatos = new CandidatoServiceDatabase();
 $partido = new PartidoServiceDataBase();
@@ -91,7 +95,7 @@ $utilities = new Utilities();
           </div>
         </div>
       </nav>
-
+<?php if ($elec[0]->Estado != 'inactivo'): ?>
        <!---->
       <div class="container-fluid pl-5 pt-4 pr-5">
                     <div class="">
@@ -212,6 +216,13 @@ $utilities = new Utilities();
               </div>
             </div>
             <!-- Fin tabla usarios -->
+            <?php else: ?>
+
+
+<h1>Tienes que iniciar elecciones</h1>
+
+ <?php endif;?>
+
 
 
 
