@@ -97,7 +97,7 @@ class EleccionServiceDatabase
     {
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("UPDATE elecciones SET estado = 'inactivo' WHERE idElecciones=?");
+        $stmt = $db->prepare("UPDATE elecciones SET estado = 'Inactivo' WHERE idElecciones=?");
         $stmt->bind_param('i', $id);
         $stmt->execute();
         $stmt->close();

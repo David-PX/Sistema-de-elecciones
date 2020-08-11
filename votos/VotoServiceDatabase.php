@@ -91,5 +91,16 @@ class VotoServiceDatabase
         $con->cerrarConexion();
 
     }
+    public function Truncate()
+    {
+
+        $con = $this->context;
+        $context = $con->conectar();
+        $sql = "TRUNCATE TABLE registrovotos";
+        mysqli_query($context, $sql);
+
+        $con->cerrarConexion();
+
+    }
 
 }

@@ -10,6 +10,8 @@ require_once '../../Datos/conexion.php';
 require_once '../../elecciones/servicios/EleccioneServiceDataBase.php';
 
 $elecciones = new EleccionServiceDatabase();
+
+$eleccionesReales = array();
 $elec = $elecciones->GetList();
 
 $service = new PuestoServiceDatabase();
@@ -88,8 +90,8 @@ $lista = $service->GetList();
       </nav>
 
        <!---->
-       <?php if ($elec[0]->Estado != 'inactivo'): ?>
-      <div class="container-fluid pl-5 pt-4 pr-5">
+     <?php if ($elec[0]->Estado != 'inactivo'): ?>
+      <div class="container-fluid pl-5 pt-4 pr-5"></div>
                     <div class="">
                     <div class="card card-elec">
 

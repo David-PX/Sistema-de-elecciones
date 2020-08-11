@@ -19,5 +19,6 @@ foreach ($cantidad as $item) {
 }
 
 $eleccion->Delete($lista1[0]->idElecciones);
+$obj->Truncate();
 
 header('Location: ../../admin/menuAdmin.php');

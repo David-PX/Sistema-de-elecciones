@@ -97,11 +97,11 @@ $lista = $service->GetById($id);
 
     <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
-      <input type="text"disabled class="form-control" id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
+      <input type="text" class="form-control " readonly id="nombre" name="nombre" required value="<?php echo $lista->Nombre; ?>">
     </div>
     <div class="form-group col-md-8">
       <label for="exampleFormControlTextarea1">Descripcion</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion"rows="3"><?php echo $lista->Descripcion; ?>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion" rows="3"><?php echo $lista->Descripcion; ?>
 </textarea>
     </div>
 

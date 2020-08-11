@@ -23,7 +23,6 @@ $votaciones = array();
 if (isset($_SESSION['votaciones'])) {
 
     $votaciones = $_SESSION['votaciones'];
-    var_dump($_SESSION);
 
 }
 
@@ -63,7 +62,7 @@ if (isset($_SESSION['votaciones'])) {
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                  <a class="dropdown-item" href="../ciudadanos/logout.php">Cerrar sesión</a>
+                  <a class="dropdown-item" href="../ciudadanos/servicios/logout.php">Cerrar sesión</a>
                 </div>
               </li>
             </ul>
@@ -103,7 +102,7 @@ if (isset($_SESSION['votaciones'])) {
               <?php endforeach;?>
 
 
-              <?php if (count($votaciones) == count($puestos)): ?>
+              <?php if (count($votaciones) == count($puestos) && count($puestos) > 0): ?>
 
               <h1>Usted Ya Ha Realizado Todos los Votos, Dele A Finalizar Palomo</h1>
 

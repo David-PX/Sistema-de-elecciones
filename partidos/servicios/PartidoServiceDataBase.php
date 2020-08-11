@@ -21,7 +21,7 @@ class PartidoServiceDataBase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("SELECT * FROM partidos WHERE Estado <> 'Inactivo' ");
+        $stmt = $db->prepare("SELECT * FROM partidos ORDER BY Estado ");
         $stmt->execute();
 
         $result = $stmt->get_result();

@@ -23,7 +23,7 @@ class CiudadanoServiceDatabase
 
         //`Cedula`, `Nombre`, `Apellido`, `Email`, `Estado`)
 
-        $stmt = $db->prepare("SELECT * FROM ciudadanos WHERE Estado <> 'Inactivo' ");
+        $stmt = $db->prepare("SELECT * FROM ciudadanos ORDER BY Estado ");
         $stmt->execute();
 
         $result = $stmt->get_result();

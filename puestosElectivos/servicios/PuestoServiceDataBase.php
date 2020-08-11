@@ -21,7 +21,7 @@ class PuestoServiceDatabase
 
         $db = $this->context->conectar();
 
-        $stmt = $db->prepare("SELECT * FROM puesto_electivo WHERE Estado <> 'Inactivo'");
+        $stmt = $db->prepare("SELECT * FROM puesto_electivo ORDER BY Estado");
         $stmt->execute();
 
         $result = $stmt->get_result();
